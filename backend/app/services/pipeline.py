@@ -18,11 +18,14 @@ from backend.app.services.duplicate_detection.duplicate_detector import Duplicat
 from backend.app.services.evaluation.evaluator import Evaluator
 
 class ReconciliationPipeline:
-    def __init__(self, data_dir: str):
-        self.data_dir = data_dir
-        self.invoices_path = os.path.join(data_dir, "invoices.csv")
-        self.transactions_path = os.path.join(data_dir, "bank_transactions.csv")
-        self.ground_truth_path = os.path.join(data_dir, "ground_truth.csv")
+    def __init__(self, data_dir: Optional[str] = None):
+        self.data_dir = data_dir if (data_dir and os.path.exists(data_dir)) else None
+        self.active_dir = self.data_dir
+        self.source = "default" if self.data_dir else "none"
+        
+        self.invoices_path = os.path.join(self.active_dir, "invoices.csv") if self.active_dir else ""
+        self.transactions_path = os.path.join(self.active_dir, "bank_transactions.csv") if self.active_dir else ""
+        self.ground_truth_path = os.path.join(self.active_dir, "ground_truth.csv") if self.active_dir else ""
         
         # State stores
         self.human_overrides: Dict[str, Dict[str, Any]] = {}
@@ -31,17 +34,51 @@ class ReconciliationPipeline:
         self.transactions_list: List[BankTransactionSchema] = []
         self.ground_truth_list: List[GroundTruthSchema] = []
 
+    def set_dataset_source(self, source: str = "default", custom_dir: Optional[str] = None):
+        if source == "uploaded" and custom_dir and os.path.exists(custom_dir):
+            self.source = "uploaded"
+            self.active_dir = custom_dir
+        elif source == "default" and custom_dir and os.path.exists(custom_dir):
+            self.data_dir = custom_dir
+            self.source = "default"
+            self.active_dir = custom_dir
+        elif self.data_dir and os.path.exists(self.data_dir):
+            self.source = "default"
+            self.active_dir = self.data_dir
+        else:
+            self.source = "none"
+            self.active_dir = None
+
+        if self.active_dir:
+            self.invoices_path = os.path.join(self.active_dir, "invoices.csv")
+            self.transactions_path = os.path.join(self.active_dir, "bank_transactions.csv")
+            self.ground_truth_path = os.path.join(self.active_dir, "ground_truth.csv")
+        else:
+            self.invoices_path = ""
+            self.transactions_path = ""
+            self.ground_truth_path = ""
+
+        # Clear active pipeline state when switching datasets
+        self.human_overrides = {}
+        self.latest_results = []
+
     def load_data(self):
         # Load Invoices
-        df_inv = pd.read_csv(self.invoices_path).fillna("")
-        self.invoices_list = [InvoiceSchema(**row.to_dict()) for _, row in df_inv.iterrows()]
+        if self.invoices_path and os.path.exists(self.invoices_path):
+            df_inv = pd.read_csv(self.invoices_path).fillna("")
+            self.invoices_list = [InvoiceSchema(**row.to_dict()) for _, row in df_inv.iterrows()]
+        else:
+            self.invoices_list = []
 
         # Load Bank Transactions
-        df_txn = pd.read_csv(self.transactions_path).fillna("")
-        self.transactions_list = [BankTransactionSchema(**row.to_dict()) for _, row in df_txn.iterrows()]
+        if self.transactions_path and os.path.exists(self.transactions_path):
+            df_txn = pd.read_csv(self.transactions_path).fillna("")
+            self.transactions_list = [BankTransactionSchema(**row.to_dict()) for _, row in df_txn.iterrows()]
+        else:
+            self.transactions_list = []
 
         # Load Ground Truth
-        if os.path.exists(self.ground_truth_path):
+        if self.ground_truth_path and os.path.exists(self.ground_truth_path):
             df_gt = pd.read_csv(self.ground_truth_path).fillna("")
             self.ground_truth_list = [
                 GroundTruthSchema(
@@ -52,9 +89,15 @@ class ReconciliationPipeline:
                     is_duplicate=bool(row["is_duplicate"]) if isinstance(row["is_duplicate"], bool) else (str(row["is_duplicate"]).lower() == 'true')
                 ) for _, row in df_gt.iterrows()
             ]
+        else:
+            self.ground_truth_list = []
 
     def run_pipeline(self) -> List[ReconciliationResultSchema]:
         self.load_data()
+
+        if not self.invoices_list and not self.transactions_list:
+            self.latest_results = []
+            return []
 
         # Step 1: Data Normalization
         norm_invoices = [Normalizer.normalize_invoice(inv) for inv in self.invoices_list]
@@ -123,6 +166,23 @@ class ReconciliationPipeline:
         return final_results
 
     def get_summary(self) -> DashboardSummarySchema:
+        if not self.invoices_list and not self.transactions_list:
+            self.load_data()
+
+        if not self.invoices_list and not self.transactions_list:
+            return DashboardSummarySchema(
+                total_invoices=0,
+                total_transactions=0,
+                total_amount_invoiced=0.0,
+                total_amount_received=0.0,
+                matched_count=0,
+                human_review_count=0,
+                unmatched_count=0,
+                duplicate_count=0,
+                late_payments_count=0,
+                overdue_invoices_count=0
+            )
+
         if not self.latest_results:
             self.run_pipeline()
 
@@ -160,7 +220,9 @@ class ReconciliationPipeline:
             overdue_invoices_count=overdue_invoices_count
         )
 
-    def evaluate(self) -> EvaluationReportSchema:
-        if not self.latest_results:
+    def evaluate(self) -> Optional[EvaluationReportSchema]:
+        if not self.latest_results and (self.invoices_list or self.transactions_list):
             self.run_pipeline()
+        if not self.ground_truth_list:
+            return None
         return Evaluator.evaluate(self.latest_results, self.ground_truth_list)

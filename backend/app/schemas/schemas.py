@@ -104,3 +104,21 @@ class HumanReviewRequestSchema(BaseModel):
     status: str  # ACCEPT, REJECT, REASSIGN, MARK_UNMATCHED
     target_invoice_id: Optional[str] = None
     reviewer_notes: Optional[str] = ""
+
+class DatasetUploadResponseSchema(BaseModel):
+    success: bool
+    source: str = "uploaded"
+    invoices_count: int
+    transactions_count: int
+    ground_truth_count: int = 0
+    ground_truth_available: bool = False
+    errors: List[str] = []
+    warnings: List[str] = []
+
+class DatasetStatusSchema(BaseModel):
+    active: bool = True
+    source: str  # "default" or "uploaded"
+    invoices_count: int
+    transactions_count: int
+    ground_truth_available: bool
+

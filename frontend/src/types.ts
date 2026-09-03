@@ -94,3 +94,23 @@ export interface EvaluationReport {
   confusion_matrix: Record<string, Record<string, number>>;
   predictions_vs_ground_truth: ComparisonItem[];
 }
+
+export interface DatasetUploadResponse {
+  success: boolean;
+  source: string;
+  invoices_count: number;
+  transactions_count: number;
+  ground_truth_count: number;
+  ground_truth_available: boolean;
+  errors: string[];
+  warnings: string[];
+}
+
+export interface DatasetStatus {
+  active: boolean;
+  source: 'default' | 'uploaded';
+  invoices_count: number;
+  transactions_count: number;
+  ground_truth_available: boolean;
+}
+

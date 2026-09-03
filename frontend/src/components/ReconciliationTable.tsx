@@ -1,18 +1,43 @@
 import React, { useState } from 'react';
 import type { ReconciliationResult } from '../types';
-import { Eye, AlertCircle, CheckCircle, UserCheck } from 'lucide-react';
+import { Eye, AlertCircle, CheckCircle, UserCheck, Upload } from 'lucide-react';
 
 interface Props {
   results: ReconciliationResult[];
   onSelectTransaction: (txn: ReconciliationResult) => void;
+  onGoToUpload?: () => void;
 }
 
-export const ReconciliationTable: React.FC<Props> = ({ results, onSelectTransaction }) => {
+export const ReconciliationTable: React.FC<Props> = ({ results, onSelectTransaction, onGoToUpload }) => {
   const [search, setSearch] = useState('');
   const [matchFilter, setMatchFilter] = useState('ALL');
   const [confidenceFilter, setConfidenceFilter] = useState('ALL');
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [reviewOnly, setReviewOnly] = useState(false);
+
+  if (results.length === 0) {
+    return (
+      <div className="glass-panel" style={{ padding: '3.5rem 2rem', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem' }}>
+        <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#38bdf8' }}>
+          <Upload size={32} />
+        </div>
+        <div>
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f8fafc', marginBottom: '0.5rem' }}>
+            No Reconciliation Data Available
+          </h3>
+          <p style={{ color: '#94a3b8', maxWidth: '520px', fontSize: '0.875rem', lineHeight: '1.5', margin: '0 auto' }}>
+            The reconciliation table is currently empty. Please upload your <strong>Invoices CSV</strong> and <strong>Bank Transactions CSV</strong> files to run the engine and view results.
+          </p>
+        </div>
+        {onGoToUpload && (
+          <button className="action-btn" onClick={onGoToUpload} style={{ marginTop: '0.5rem' }}>
+            <Upload size={16} />
+            Upload Dataset Now
+          </button>
+        )}
+      </div>
+    );
+  }
 
   const filteredResults = results.filter(r => {
     const query = search.toLowerCase();
