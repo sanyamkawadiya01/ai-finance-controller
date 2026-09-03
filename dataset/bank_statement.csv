@@ -1,0 +1,86 @@
+transaction_id,transaction_date,transaction_type,amount,currency,customer_name,reference,description
+TXN-2026-001,2026-02-25,RTGS,45024.99,INR,Tata Consultancy Services Ltd,RTGS/INV-2026-001/REF39256,RTGS CR - Payment received from Tata Consultancy Services Ltd
+TXN-2026-002,2026-01-24,NEFT,45676.02,INR,Infosys Technologies Ltd,NEFT/INV-2026-002/REF87397,NEFT CR - Payment received from Infosys Technologies Ltd
+TXN-2026-003,2026-02-15,RTGS,25029.77,INR,Reliance Retail Ventures Ltd,RTGS/INV-2026-003/REF76237,RTGS CR - Payment received from Reliance Retail Ventures Ltd
+TXN-2026-004,2026-02-27,IMPS,25560.68,INR,Wipro Digital Solutions,IMPS/INV-2026-004/REF38893,IMPS CR - Payment received from Wipro Digital Solutions
+TXN-2026-005,2026-02-22,RTGS,185808.62,INR,Bharti Airtel Enterprise Services,RTGS/INV-2026-005/REF65392,RTGS CR - Payment received from Bharti Airtel Enterprise Services
+TXN-2026-006,2026-03-04,NEFT,185808.62,INR,Bharti Airtel Enterprise Services,NEFT/DUP-PYMT/INV-2026-005/REF46421,NEFT DUP CR - Duplicate payment for INV-2026-005 from Bharti Airtel Enterprise Services
+TXN-2026-007,2026-02-04,NEFT,120956.26,INR,HDFC Securities Ltd,NEFT/INV-2026-006/REF22156,NEFT CR - Payment received from HDFC Securities Ltd
+TXN-2026-008,2026-02-21,ACH CREDIT,45358.62,INR,Tech Mahindra Global Services,ACH CREDIT/INV-2026-007/REF44671,ACH CREDIT CR - Payment received from Tech Mahindra Global Services
+TXN-2026-009,2026-02-07,NEFT,480535.69,INR,Zomato Media Private Ltd,NEFT/INV-2026-008/REF82357,NEFT CR - Payment received from Zomato Media Private Ltd
+TXN-2026-010,2026-03-01,NEFT,250576.77,INR,Swiggy Logistics India,NEFT/INV-2026-009/REF96673,NEFT CR - Payment received from Swiggy Logistics India
+TXN-2026-011,2026-02-14,NEFT,185984.24,INR,Mahindra & Mahindra Financial,NEFT/INV-2026-010/REF59823,NEFT CR - Payment received from Mahindra & Mahindra Financial
+TXN-2026-012,2026-03-01,RTGS,480635.05,INR,Paytm Payments Bank Corp,RTGS/INV-2026-011/REF58520,RTGS CR - Payment received from Paytm Payments Bank Corp
+TXN-2026-013,2026-03-07,ACH CREDIT,120669.50,INR,Nykaa E-Commerce Retail,ACH CREDIT/INV-2026-012/REF93227,ACH CREDIT CR - Payment received from Nykaa E-Commerce Retail
+TXN-2026-014,2026-02-21,IMPS,52728.40,INR,PolicyBazaar Web Aggregator,IMPS/INV-2026-013/REF59735,IMPS CR - Payment received from PolicyBazaar Web Aggregator
+TXN-2026-015,2026-03-07,NEFT,52219.40,INR,Razorpay Software Private Ltd,NEFT/INV-2026-014/REF40021,NEFT CR - Payment received from Razorpay Software Private Ltd
+TXN-2026-016,2026-02-26,RTGS,250400.76,INR,Zerodha Broking Ltd,RTGS/INV-2026-015/REF84341,RTGS CR - Payment received from Zerodha Broking Ltd
+TXN-2026-017,2026-03-14,NEFT,250400.76,INR,Zerodha Broking Ltd,NEFT/DUP-PYMT/INV-2026-015/REF51245,NEFT DUP CR - Duplicate payment for INV-2026-015 from Zerodha Broking Ltd
+TXN-2026-018,2026-02-22,RTGS,480395.24,INR,LTI Mindtree Solutions,RTGS/INV-2026-016/REF44718,RTGS CR - Payment received from LTI Mindtree Solutions
+TXN-2026-019,2026-02-23,UPI,120744.24,INR,Titan Company Ltd,UPI/INV-2026-017/REF86622,UPI CR - Payment received from Titan Company Ltd
+TXN-2026-020,2026-03-18,ACH CREDIT,340361.63,INR,Asian Paints India Ltd,ACH CREDIT/INV-2026-018/REF74686,ACH CREDIT CR - Payment received from Asian Paints India Ltd
+TXN-2026-021,2026-03-05,RTGS,25860.24,INR,Marico Consumer Products,RTGS/INV-2026-019/REF99192,RTGS CR - Payment received from Marico Consumer Products
+TXN-2026-022,2026-03-17,ACH CREDIT,45384.38,INR,Dabur India Limited,ACH CREDIT/INV-2026-020/REF42953,ACH CREDIT CR - Payment received from Dabur India Limited
+TXN-2026-023,2026-04-09,ACH CREDIT,25679.60,INR,Havells Electricals Ltd,ACH CREDIT/INV-2026-021/REF44973,ACH CREDIT CR - Payment received from Havells Electricals Ltd
+TXN-2026-024,2026-04-06,RTGS,250111.44,INR,Hero MotoCorp Enterprise,RTGS/INV-2026-022/REF69470,RTGS CR - Payment received from Hero MotoCorp Enterprise
+TXN-2026-025,2026-03-13,ACH CREDIT,185970.92,INR,Bajaj Auto Commercial,ACH CREDIT/INV-2026-023/REF23947,ACH CREDIT CR - Payment received from Bajaj Auto Commercial
+TXN-2026-026,2026-04-08,ACH CREDIT,185840.83,INR,TVS Motor Company,ACH CREDIT/INV-2026-024/REF36071,ACH CREDIT CR - Payment received from TVS Motor Company
+TXN-2026-027,2026-03-11,ACH CREDIT,250761.75,INR,Sun Pharmaceutical Industries,ACH CREDIT/INV-2026-025/REF10074,ACH CREDIT CR - Payment received from Sun Pharmaceutical Industries
+TXN-2026-028,2026-03-25,NEFT,250761.75,INR,Sun Pharmaceutical Industries,NEFT/DUP-PYMT/INV-2026-025/REF52487,NEFT DUP CR - Duplicate payment for INV-2026-025 from Sun Pharmaceutical Industries
+TXN-2026-029,2026-04-07,UPI,25111.76,INR,Dr. Reddy's Laboratories,UPI/INV-2026-026/REF50306,UPI CR - Payment received from Dr. Reddy's Laboratories
+TXN-2026-030,2026-03-25,ACH CREDIT,25240.63,INR,Cipla Healthcare Solutions,ACH CREDIT/INV-2026-027/REF20322,ACH CREDIT CR - Payment received from Cipla Healthcare Solutions
+TXN-2026-031,2026-03-27,ACH CREDIT,480815.21,INR,Lupin Pharmaceuticals,ACH CREDIT/INV-2026-028/REF26483,ACH CREDIT CR - Payment received from Lupin Pharmaceuticals
+TXN-2026-032,2026-03-29,RTGS,480945.90,INR,Biocon Biologics Ltd,RTGS/INV-2026-029/REF44741,RTGS CR - Payment received from Biocon Biologics Ltd
+TXN-2026-033,2026-04-30,ACH CREDIT,340963.40,INR,Mankind Pharma Ltd,ACH CREDIT/INV-2026-030/REF36365,ACH CREDIT CR - Payment received from Mankind Pharma Ltd
+TXN-2026-034,2026-05-02,UPI,185398.59,INR,Torrent Pharmaceuticals,UPI/INV-2026-031/REF67422,UPI CR - Payment received from Torrent Pharmaceuticals
+TXN-2026-035,2026-05-04,RTGS,480120.88,INR,Jubilant Foodworks Ltd,RTGS/INV-2026-032/REF18392,RTGS CR - Payment received from Jubilant Foodworks Ltd
+TXN-2026-036,2026-04-21,RTGS,25587.72,INR,Britannia Industries Ltd,RTGS/INV-2026-033/REF87128,RTGS CR - Payment received from Britannia Industries Ltd
+TXN-2026-037,2026-04-08,NEFT,25070.92,INR,ITC Limited Corp,NEFT/INV-2026-034/REF40007,NEFT CR - Payment received from ITC Limited Corp
+TXN-2026-038,2026-04-10,NEFT,25858.78,INR,UltraTech Cement Solutions,NEFT/INV-2026-035/REF77391,NEFT CR - Payment received from UltraTech Cement Solutions
+TXN-2026-039,2026-04-18,NEFT,25858.78,INR,UltraTech Cement Solutions,NEFT/DUP-PYMT/INV-2026-035/REF46500,NEFT DUP CR - Duplicate payment for INV-2026-035 from UltraTech Cement Solutions
+TXN-2026-040,2026-05-12,RTGS,480214.02,INR,Grasim Industries Ltd,RTGS/INV-2026-036/REF84847,RTGS CR - Payment received from Grasim Industries Ltd
+TXN-2026-041,2026-05-14,IMPS,480242.75,INR,Hindalco Metal Operations,IMPS/INV-2026-037/REF63354,IMPS CR - Payment received from Hindalco Metal Operations
+TXN-2026-042,2026-04-16,IMPS,45096.83,INR,JSW Steel Infrastructure,IMPS/INV-2026-038/REF56438,IMPS CR - Payment received from JSW Steel Infrastructure
+TXN-2026-043,2026-05-03,NEFT,340466.56,INR,Tata Steel Industrial Services,NEFT/INV-2026-039/REF98259,NEFT CR - Payment received from Tata Steel Industrial Services
+TXN-2026-044,2026-05-20,UPI,45060.55,INR,Adani Ports & SEZ Ltd,UPI/INV-2026-040/REF24322,UPI CR - Payment received from Adani Ports & SEZ Ltd
+TXN-2026-045,2026-04-30,RTGS,120190.02,INR,DLF Urban Infrastructure,RTGS/INV-2026-041/REF65296,RTGS CR - Payment received from DLF Urban Infrastructure
+TXN-2026-046,2026-05-08,NEFT,185462.17,INR,Godrej Properties Ltd,NEFT/INV-2026-042/REF68082,NEFT CR - Payment received from Godrej Properties Ltd
+TXN-2026-047,2026-06-04,NEFT,45050.54,INR,Prestige Estates Projects,NEFT/INV-2026-043/REF22224,NEFT CR - Payment received from Prestige Estates Projects
+TXN-2026-048,2026-05-06,RTGS,75406.01,INR,Larsen & Toubro Engineering,RTGS/INV-2026-044/REF62565,RTGS CR - Payment received from Larsen & Toubro Engineering
+TXN-2026-049,2026-05-07,UPI,75378.59,INR,Vedanta Resources India,UPI/INV-2026-045/REF69638,UPI CR - Payment received from Vedanta Resources India
+TXN-2026-050,2026-05-16,NEFT,75378.59,INR,Vedanta Resources India,NEFT/DUP-PYMT/INV-2026-045/REF65444,NEFT DUP CR - Duplicate payment for INV-2026-045 from Vedanta Resources India
+TXN-2026-051,2026-06-09,RTGS,52661.21,INR,Apollo Hospitals Enterprise,RTGS/INV-2026-046/REF34890,RTGS CR - Payment received from Apollo Hospitals Enterprise
+TXN-2026-052,2026-05-29,ACH CREDIT,120967.74,INR,Max Healthcare Institute,ACH CREDIT/INV-2026-047/REF17989,ACH CREDIT CR - Payment received from Max Healthcare Institute
+TXN-2026-053,2026-06-15,IMPS,250057.11,INR,ICICI Lombard General Insurance,IMPS/INV-2026-048/REF75909,IMPS CR - Payment received from ICICI Lombard General Insurance
+TXN-2026-054,2026-06-16,NEFT,75056.82,INR,SBI Life Insurance Co Ltd,NEFT/INV-2026-049/REF34356,NEFT CR - Payment received from SBI Life Insurance Co Ltd
+TXN-2026-055,2026-05-14,IMPS,45674.54,INR,Axis Bank Commercial Banking,IMPS/INV-2026-050/REF25713,IMPS CR - Payment received from Axis Bank Commercial Banking
+TXN-2026-056,2026-06-09,IMPS,60289.17,INR,Tata Consultancy Services Ltd,IMPS/PARTIAL/INV-2026-051/REF96163,IMPS CR - Part payment for INV-2026-051
+TXN-2026-057,2026-06-09,UPI,36621.24,INR,Infosys Technologies Ltd,UPI/PARTIAL/INV-2026-052/REF41285,UPI CR - Part payment for INV-2026-052
+TXN-2026-058,2026-05-23,UPI,238091.52,INR,Reliance Retail Ventures Ltd,UPI/PARTIAL/INV-2026-053/REF19508,UPI CR - Part payment for INV-2026-053
+TXN-2026-059,2026-05-16,NEFT,384496.43,INR,Wipro Digital Solutions,NEFT/PARTIAL/INV-2026-054/REF80468,NEFT CR - Part payment for INV-2026-054
+TXN-2026-060,2026-05-18,RTGS,36585.46,INR,Bharti Airtel Enterprise Services,RTGS/PARTIAL/INV-2026-055/REF58434,RTGS CR - Part payment for INV-2026-055
+TXN-2026-061,2026-06-01,ACH CREDIT,60350.20,INR,HDFC Securities Ltd,ACH CREDIT/PARTIAL/INV-2026-056/REF95717,ACH CREDIT CR - Part payment for INV-2026-056
+TXN-2026-062,2026-06-18,NEFT,20533.76,INR,Tech Mahindra Global Services,NEFT/PARTIAL/INV-2026-057/REF27601,NEFT CR - Part payment for INV-2026-057
+TXN-2026-063,2026-06-10,RTGS,36711.06,INR,Zomato Media Private Ltd,RTGS/PARTIAL/INV-2026-058/REF45697,RTGS CR - Part payment for INV-2026-058
+TXN-2026-064,2026-06-12,UPI,72430.13,INR,Swiggy Logistics India,UPI/PARTIAL/INV-2026-059/REF76244,UPI CR - Part payment for INV-2026-059
+TXN-2026-065,2026-06-14,NEFT,92952.21,INR,Mahindra & Mahindra Financial,NEFT/PARTIAL/INV-2026-060/REF93136,NEFT CR - Part payment for INV-2026-060
+TXN-2026-066,2026-06-16,RTGS,129530.83,INR,Paytm Payments Bank Corp,RTGS/PARTIAL/INV-2026-061/REF93507,RTGS CR - Part payment for INV-2026-061
+TXN-2026-067,2026-06-18,IMPS,60592.39,INR,Nykaa E-Commerce Retail,IMPS/PARTIAL/INV-2026-062/REF83519,IMPS CR - Part payment for INV-2026-062
+TXN-2026-068,2026-06-15,NEFT,27045.10,INR,PolicyBazaar Web Aggregator,NEFT/PARTIAL/INV-2026-063/REF58393,NEFT CR - Part payment for INV-2026-063
+TXN-2026-069,2026-07-09,UPI,31288.77,INR,Razorpay Software Private Ltd,UPI/PARTIAL/INV-2026-064/REF57795,UPI CR - Part payment for INV-2026-064
+TXN-2026-070,2026-06-12,UPI,150125.92,INR,Zerodha Broking Ltd,UPI/PARTIAL/INV-2026-065/REF83385,UPI CR - Part payment for INV-2026-065
+TXN-2026-071,2026-06-24,RTGS,75074.84,INR,LTI Mindtree Solutions,RTGS/MISMATCH/INV-2026-066/REF64040,RTGS CR - Payment for INV-2026-066 (amount mismatch)
+TXN-2026-072,2026-06-09,RTGS,80235.83,INR,Titan Company Ltd,RTGS/MISMATCH/INV-2026-067/REF44970,RTGS CR - Payment for INV-2026-067 (amount mismatch)
+TXN-2026-073,2026-06-11,RTGS,48882.16,INR,Asian Paints India Ltd,RTGS/MISMATCH/INV-2026-068/REF36158,RTGS CR - Payment for INV-2026-068 (amount mismatch)
+TXN-2026-074,2026-06-30,NEFT,249454.89,INR,Marico Consumer Products,NEFT/MISMATCH/INV-2026-069/REF96511,NEFT CR - Payment for INV-2026-069 (amount mismatch)
+TXN-2026-075,2026-06-16,UPI,347527.93,INR,Dabur India Limited,UPI/MISMATCH/INV-2026-070/REF94080,UPI CR - Payment for INV-2026-070 (amount mismatch)
+TXN-2026-076,2026-07-21,UPI,339478.84,INR,Havells Electricals Ltd,UPI/MISMATCH/INV-2026-071/REF13617,UPI CR - Payment for INV-2026-071 (amount mismatch)
+TXN-2026-077,2026-06-23,NEFT,183678.39,INR,Hero MotoCorp Enterprise,NEFT/MISMATCH/INV-2026-072/REF24208,NEFT CR - Payment for INV-2026-072 (amount mismatch)
+TXN-2026-078,2026-07-25,IMPS,344845.34,INR,Bajaj Auto Commercial,IMPS/MISMATCH/INV-2026-073/REF89457,IMPS CR - Payment for INV-2026-073 (amount mismatch)
+TXN-2026-079,2026-07-29,UPI,50384.81,INR,TVS Motor Company,UPI/MISMATCH/INV-2026-074/REF15817,UPI CR - Payment for INV-2026-074 (amount mismatch)
+TXN-2026-080,2026-03-07,RTGS,338801.69,INR,Sun Pharmaceutical Industries,RTGS/MISMATCH/INV-2026-075/REF57739,RTGS CR - Payment for INV-2026-075 (amount mismatch)
+TXN-2026-081,2026-05-12,IMPS,65000.00,INR,Direct Bank Transfer,IMPS/9876543210/MISC_CREDIT,Credit transaction - Unidentified sender Direct Bank Transfer
+TXN-2026-082,2026-05-25,UPI,32500.00,INR,Unknown Client Corp,UPI/7711223344/VENDOR_PAY,Credit transaction - Unidentified sender Unknown Client Corp
+TXN-2026-083,2026-05-16,RTGS,180000.00,INR,Global Tech Solutions Pvt,RTGS/CMS/UNKNOWN_REF,Credit transaction - Unidentified sender Global Tech Solutions Pvt
+TXN-2026-084,2026-05-18,NEFT,45000.00,INR,Misc Advance Deposit Account,NEFT/ADV/88990011,Credit transaction - Unidentified sender Misc Advance Deposit Account
+TXN-2026-085,2026-05-21,ACH,112000.00,INR,Unidentified Electronic Credit,ACH/UNKNOWN/55443322,Credit transaction - Unidentified sender Unidentified Electronic Credit
