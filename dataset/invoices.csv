@@ -1,0 +1,101 @@
+invoice_id,customer_id,customer_name,invoice_date,due_date,invoice_amount,currency,description
+INV-2026-001,CUST-001,Tata Consultancy Services Ltd,2026-01-17,2026-03-03,45024.99,INR,IT Infrastructure & Cloud Hosting Services
+INV-2026-002,CUST-002,Infosys Technologies Ltd,2026-01-19,2026-02-03,45676.02,INR,Annual Software Enterprise License Renewal
+INV-2026-003,CUST-003,Reliance Retail Ventures Ltd,2026-01-21,2026-02-20,25029.77,INR,Cybersecurity Audit & Compliance Advisory
+INV-2026-004,CUST-004,Wipro Digital Solutions,2026-01-23,2026-03-09,25560.68,INR,Monthly Facility Operations & Maintenance
+INV-2026-005,CUST-005,Bharti Airtel Enterprise Services,2026-01-25,2026-02-24,185808.62,INR,Industrial Equipment Maintenance Retainer
+INV-2026-006,CUST-006,HDFC Securities Ltd,2026-01-27,2026-02-11,120956.26,INR,Supply of High-Grade Raw Materials
+INV-2026-007,CUST-007,Tech Mahindra Global Services,2026-01-29,2026-02-28,45358.62,INR,Corporate Legal & Tax Advisory Services
+INV-2026-008,CUST-008,Zomato Media Private Ltd,2026-01-31,2026-02-15,480535.69,INR,Q1 Logistics & Freight Forwarding Services
+INV-2026-009,CUST-009,Swiggy Logistics India,2026-02-02,2026-03-04,250576.77,INR,Supply of Enterprise Laptops & Workstations
+INV-2026-010,CUST-010,Mahindra & Mahindra Financial,2026-02-04,2026-02-19,185984.24,INR,Financial Core Banking Integration Services
+INV-2026-011,CUST-011,Paytm Payments Bank Corp,2026-02-06,2026-03-08,480635.05,INR,Digital Brand Marketing & PR Campaign
+INV-2026-012,CUST-012,Nykaa E-Commerce Retail,2026-02-08,2026-03-10,120669.50,INR,Enterprise Database Optimization & Support
+INV-2026-013,CUST-013,PolicyBazaar Web Aggregator,2026-02-10,2026-02-25,52728.40,INR,IT Infrastructure & Cloud Hosting Services
+INV-2026-014,CUST-014,Razorpay Software Private Ltd,2026-02-12,2026-03-14,52219.40,INR,Annual Software Enterprise License Renewal
+INV-2026-015,CUST-015,Zerodha Broking Ltd,2026-02-14,2026-03-01,250400.76,INR,Cybersecurity Audit & Compliance Advisory
+INV-2026-016,CUST-016,LTI Mindtree Solutions,2026-02-16,2026-03-03,480395.24,INR,Monthly Facility Operations & Maintenance
+INV-2026-017,CUST-017,Titan Company Ltd,2026-02-18,2026-03-05,120744.24,INR,Industrial Equipment Maintenance Retainer
+INV-2026-018,CUST-018,Asian Paints India Ltd,2026-02-20,2026-03-22,340361.63,INR,Supply of High-Grade Raw Materials
+INV-2026-019,CUST-019,Marico Consumer Products,2026-02-22,2026-03-09,25860.24,INR,Corporate Legal & Tax Advisory Services
+INV-2026-020,CUST-020,Dabur India Limited,2026-02-24,2026-03-26,45384.38,INR,Q1 Logistics & Freight Forwarding Services
+INV-2026-021,CUST-021,Havells Electricals Ltd,2026-02-26,2026-04-12,25679.60,INR,Supply of Enterprise Laptops & Workstations
+INV-2026-022,CUST-022,Hero MotoCorp Enterprise,2026-02-28,2026-04-14,250111.44,INR,Financial Core Banking Integration Services
+INV-2026-023,CUST-023,Bajaj Auto Commercial,2026-03-02,2026-03-17,185970.92,INR,Digital Brand Marketing & PR Campaign
+INV-2026-024,CUST-024,TVS Motor Company,2026-03-04,2026-04-18,185840.83,INR,Enterprise Database Optimization & Support
+INV-2026-025,CUST-025,Sun Pharmaceutical Industries,2026-03-06,2026-03-21,250761.75,INR,IT Infrastructure & Cloud Hosting Services
+INV-2026-026,CUST-026,Dr. Reddy's Laboratories,2026-03-08,2026-04-07,25111.76,INR,Annual Software Enterprise License Renewal
+INV-2026-027,CUST-027,Cipla Healthcare Solutions,2026-03-10,2026-03-25,25240.63,INR,Cybersecurity Audit & Compliance Advisory
+INV-2026-028,CUST-028,Lupin Pharmaceuticals,2026-03-12,2026-03-27,480815.21,INR,Monthly Facility Operations & Maintenance
+INV-2026-029,CUST-029,Biocon Biologics Ltd,2026-03-14,2026-03-29,480945.90,INR,Industrial Equipment Maintenance Retainer
+INV-2026-030,CUST-030,Mankind Pharma Ltd,2026-03-16,2026-04-30,340963.40,INR,Supply of High-Grade Raw Materials
+INV-2026-031,CUST-031,Torrent Pharmaceuticals,2026-03-18,2026-05-02,185398.59,INR,Corporate Legal & Tax Advisory Services
+INV-2026-032,CUST-032,Jubilant Foodworks Ltd,2026-03-20,2026-05-04,480120.88,INR,Q1 Logistics & Freight Forwarding Services
+INV-2026-033,CUST-033,Britannia Industries Ltd,2026-03-22,2026-04-21,25587.72,INR,Supply of Enterprise Laptops & Workstations
+INV-2026-034,CUST-034,ITC Limited Corp,2026-03-24,2026-04-08,25070.92,INR,Financial Core Banking Integration Services
+INV-2026-035,CUST-035,UltraTech Cement Solutions,2026-03-26,2026-04-10,25858.78,INR,Digital Brand Marketing & PR Campaign
+INV-2026-036,CUST-036,Grasim Industries Ltd,2026-03-28,2026-05-12,480214.02,INR,Enterprise Database Optimization & Support
+INV-2026-037,CUST-037,Hindalco Metal Operations,2026-03-30,2026-05-14,480242.75,INR,IT Infrastructure & Cloud Hosting Services
+INV-2026-038,CUST-038,JSW Steel Infrastructure,2026-04-01,2026-04-16,45096.83,INR,Annual Software Enterprise License Renewal
+INV-2026-039,CUST-039,Tata Steel Industrial Services,2026-04-03,2026-05-03,340466.56,INR,Cybersecurity Audit & Compliance Advisory
+INV-2026-040,CUST-040,Adani Ports & SEZ Ltd,2026-04-05,2026-05-20,45060.55,INR,Monthly Facility Operations & Maintenance
+INV-2026-041,CUST-041,DLF Urban Infrastructure,2026-04-07,2026-04-22,120190.02,INR,Industrial Equipment Maintenance Retainer
+INV-2026-042,CUST-042,Godrej Properties Ltd,2026-04-09,2026-04-24,185462.17,INR,Supply of High-Grade Raw Materials
+INV-2026-043,CUST-043,Prestige Estates Projects,2026-04-11,2026-05-26,45050.54,INR,Corporate Legal & Tax Advisory Services
+INV-2026-044,CUST-044,Larsen & Toubro Engineering,2026-04-13,2026-04-28,75406.01,INR,Q1 Logistics & Freight Forwarding Services
+INV-2026-045,CUST-045,Vedanta Resources India,2026-04-15,2026-04-30,75378.59,INR,Supply of Enterprise Laptops & Workstations
+INV-2026-046,CUST-046,Apollo Hospitals Enterprise,2026-04-17,2026-06-01,52661.21,INR,Financial Core Banking Integration Services
+INV-2026-047,CUST-047,Max Healthcare Institute,2026-04-19,2026-05-19,120967.74,INR,Digital Brand Marketing & PR Campaign
+INV-2026-048,CUST-048,ICICI Lombard General Insurance,2026-04-21,2026-06-05,250057.11,INR,Enterprise Database Optimization & Support
+INV-2026-049,CUST-049,SBI Life Insurance Co Ltd,2026-04-23,2026-06-07,75056.82,INR,IT Infrastructure & Cloud Hosting Services
+INV-2026-050,CUST-050,Axis Bank Commercial Banking,2026-04-25,2026-05-10,45674.54,INR,Annual Software Enterprise License Renewal
+INV-2026-051,CUST-001,Tata Consultancy Services Ltd,2026-04-27,2026-06-11,120578.34,INR,Cybersecurity Audit & Compliance Advisory
+INV-2026-052,CUST-002,Infosys Technologies Ltd,2026-04-29,2026-06-13,52316.05,INR,Monthly Facility Operations & Maintenance
+INV-2026-053,CUST-003,Reliance Retail Ventures Ltd,2026-05-01,2026-05-31,340130.75,INR,Industrial Equipment Maintenance Retainer
+INV-2026-054,CUST-004,Wipro Digital Solutions,2026-05-03,2026-05-18,480620.54,INR,Supply of High-Grade Raw Materials
+INV-2026-055,CUST-005,Bharti Airtel Enterprise Services,2026-05-05,2026-05-20,52264.94,INR,Corporate Legal & Tax Advisory Services
+INV-2026-056,CUST-006,HDFC Securities Ltd,2026-05-07,2026-06-06,75437.75,INR,Q1 Logistics & Freight Forwarding Services
+INV-2026-057,CUST-007,Tech Mahindra Global Services,2026-05-09,2026-06-23,25667.20,INR,Supply of Enterprise Laptops & Workstations
+INV-2026-058,CUST-008,Zomato Media Private Ltd,2026-05-11,2026-06-10,45888.82,INR,Financial Core Banking Integration Services
+INV-2026-059,CUST-009,Swiggy Logistics India,2026-05-13,2026-06-12,120716.89,INR,Digital Brand Marketing & PR Campaign
+INV-2026-060,CUST-010,Mahindra & Mahindra Financial,2026-05-15,2026-06-14,185904.43,INR,Enterprise Database Optimization & Support
+INV-2026-061,CUST-011,Paytm Payments Bank Corp,2026-05-17,2026-06-16,185044.04,INR,IT Infrastructure & Cloud Hosting Services
+INV-2026-062,CUST-012,Nykaa E-Commerce Retail,2026-05-19,2026-06-18,75740.49,INR,Annual Software Enterprise License Renewal
+INV-2026-063,CUST-013,PolicyBazaar Web Aggregator,2026-05-21,2026-06-05,45075.17,INR,Cybersecurity Audit & Compliance Advisory
+INV-2026-064,CUST-014,Razorpay Software Private Ltd,2026-05-23,2026-07-07,52147.95,INR,Monthly Facility Operations & Maintenance
+INV-2026-065,CUST-015,Zerodha Broking Ltd,2026-05-25,2026-06-09,250209.87,INR,Industrial Equipment Maintenance Retainer
+INV-2026-066,CUST-016,LTI Mindtree Solutions,2026-05-27,2026-06-26,75924.84,INR,Supply of High-Grade Raw Materials
+INV-2026-067,CUST-017,Titan Company Ltd,2026-05-29,2026-06-13,75735.83,INR,Corporate Legal & Tax Advisory Services
+INV-2026-068,CUST-018,Asian Paints India Ltd,2026-05-31,2026-06-15,45382.16,INR,Q1 Logistics & Freight Forwarding Services
+INV-2026-069,CUST-019,Marico Consumer Products,2026-06-02,2026-07-02,250304.89,INR,Supply of Enterprise Laptops & Workstations
+INV-2026-070,CUST-020,Dabur India Limited,2026-06-04,2026-06-19,340327.93,INR,Financial Core Banking Integration Services
+INV-2026-071,CUST-021,Havells Electricals Ltd,2026-06-06,2026-07-21,340678.84,INR,Digital Brand Marketing & PR Campaign
+INV-2026-072,CUST-022,Hero MotoCorp Enterprise,2026-06-08,2026-06-23,185178.39,INR,Enterprise Database Optimization & Support
+INV-2026-073,CUST-023,Bajaj Auto Commercial,2026-06-10,2026-07-25,340345.34,INR,IT Infrastructure & Cloud Hosting Services
+INV-2026-074,CUST-024,TVS Motor Company,2026-06-12,2026-07-27,45384.81,INR,Annual Software Enterprise License Renewal
+INV-2026-075,CUST-025,Sun Pharmaceutical Industries,2026-01-15,2026-03-01,340001.69,INR,Cybersecurity Audit & Compliance Advisory
+INV-2026-076,CUST-026,Dr. Reddy's Laboratories,2026-01-17,2026-02-16,45947.93,INR,Monthly Facility Operations & Maintenance
+INV-2026-077,CUST-027,Cipla Healthcare Solutions,2026-01-19,2026-02-18,250662.72,INR,Industrial Equipment Maintenance Retainer
+INV-2026-078,CUST-028,Lupin Pharmaceuticals,2026-01-21,2026-02-05,185506.62,INR,Supply of High-Grade Raw Materials
+INV-2026-079,CUST-029,Biocon Biologics Ltd,2026-01-23,2026-03-09,340325.86,INR,Corporate Legal & Tax Advisory Services
+INV-2026-080,CUST-030,Mankind Pharma Ltd,2026-01-25,2026-03-11,185553.86,INR,Q1 Logistics & Freight Forwarding Services
+INV-2026-081,CUST-031,Torrent Pharmaceuticals,2026-01-27,2026-02-11,340664.26,INR,Supply of Enterprise Laptops & Workstations
+INV-2026-082,CUST-032,Jubilant Foodworks Ltd,2026-01-29,2026-02-28,75614.90,INR,Financial Core Banking Integration Services
+INV-2026-083,CUST-033,Britannia Industries Ltd,2026-01-31,2026-03-02,340547.39,INR,Digital Brand Marketing & PR Campaign
+INV-2026-084,CUST-034,ITC Limited Corp,2026-02-02,2026-02-17,185286.63,INR,Enterprise Database Optimization & Support
+INV-2026-085,CUST-035,UltraTech Cement Solutions,2026-02-04,2026-03-06,250464.52,INR,IT Infrastructure & Cloud Hosting Services
+INV-2026-086,CUST-036,Grasim Industries Ltd,2026-02-06,2026-03-08,120510.66,INR,Annual Software Enterprise License Renewal
+INV-2026-087,CUST-037,Hindalco Metal Operations,2026-02-08,2026-03-25,75658.19,INR,Cybersecurity Audit & Compliance Advisory
+INV-2026-088,CUST-038,JSW Steel Infrastructure,2026-02-10,2026-03-12,52663.19,INR,Monthly Facility Operations & Maintenance
+INV-2026-089,CUST-039,Tata Steel Industrial Services,2026-02-12,2026-03-29,250093.29,INR,Industrial Equipment Maintenance Retainer
+INV-2026-090,CUST-040,Adani Ports & SEZ Ltd,2026-02-14,2026-03-01,185224.42,INR,Supply of High-Grade Raw Materials
+INV-2026-091,CUST-041,DLF Urban Infrastructure,2026-02-16,2026-03-03,75024.40,INR,Corporate Legal & Tax Advisory Services
+INV-2026-092,CUST-042,Godrej Properties Ltd,2026-02-18,2026-03-05,480610.66,INR,Q1 Logistics & Freight Forwarding Services
+INV-2026-093,CUST-043,Prestige Estates Projects,2026-02-20,2026-03-07,480414.03,INR,Supply of Enterprise Laptops & Workstations
+INV-2026-094,CUST-044,Larsen & Toubro Engineering,2026-02-22,2026-04-08,120717.63,INR,Financial Core Banking Integration Services
+INV-2026-095,CUST-045,Vedanta Resources India,2026-02-24,2026-03-26,480399.25,INR,Digital Brand Marketing & PR Campaign
+INV-2026-096,CUST-046,Apollo Hospitals Enterprise,2026-02-26,2026-03-13,25891.77,INR,Enterprise Database Optimization & Support
+INV-2026-097,CUST-047,Max Healthcare Institute,2026-02-28,2026-03-15,340218.62,INR,IT Infrastructure & Cloud Hosting Services
+INV-2026-098,CUST-048,ICICI Lombard General Insurance,2026-03-02,2026-04-16,52464.09,INR,Annual Software Enterprise License Renewal
+INV-2026-099,CUST-049,SBI Life Insurance Co Ltd,2026-03-04,2026-04-18,120916.55,INR,Cybersecurity Audit & Compliance Advisory
+INV-2026-100,CUST-050,Axis Bank Commercial Banking,2026-03-06,2026-03-21,480133.21,INR,Monthly Facility Operations & Maintenance

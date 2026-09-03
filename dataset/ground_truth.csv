@@ -1,0 +1,111 @@
+transaction_id,invoice_id,match_type,is_match,amount_difference,payment_timing,is_duplicate,is_unmatched
+TXN-2026-001,INV-2026-001,Exact Match,1,0.00,Early,0,0
+TXN-2026-002,INV-2026-002,Exact Match,1,0.00,Early,0,0
+TXN-2026-003,INV-2026-003,Exact Match,1,0.00,Early,0,0
+TXN-2026-004,INV-2026-004,Exact Match,1,0.00,Early,0,0
+TXN-2026-005,INV-2026-005,Exact Match,1,0.00,Early,0,0
+TXN-2026-006,INV-2026-005,Duplicate Payment,1,0.00,Late,1,0
+TXN-2026-007,INV-2026-006,Exact Match,1,0.00,Early,0,0
+TXN-2026-008,INV-2026-007,Exact Match,1,0.00,Early,0,0
+TXN-2026-009,INV-2026-008,Exact Match,1,0.00,Early,0,0
+TXN-2026-010,INV-2026-009,Exact Match,1,0.00,Early,0,0
+TXN-2026-011,INV-2026-010,Exact Match,1,0.00,Early,0,0
+TXN-2026-012,INV-2026-011,Exact Match,1,0.00,Early,0,0
+TXN-2026-013,INV-2026-012,Exact Match,1,0.00,Early,0,0
+TXN-2026-014,INV-2026-013,Exact Match,1,0.00,Early,0,0
+TXN-2026-015,INV-2026-014,Exact Match,1,0.00,Early,0,0
+TXN-2026-016,INV-2026-015,Exact Match,1,0.00,Early,0,0
+TXN-2026-017,INV-2026-015,Duplicate Payment,1,0.00,Late,1,0
+TXN-2026-018,INV-2026-016,Exact Match,1,0.00,Early,0,0
+TXN-2026-019,INV-2026-017,Exact Match,1,0.00,Early,0,0
+TXN-2026-020,INV-2026-018,Exact Match,1,0.00,Early,0,0
+TXN-2026-021,INV-2026-019,Exact Match,1,0.00,Early,0,0
+TXN-2026-022,INV-2026-020,Exact Match,1,0.00,Early,0,0
+TXN-2026-023,INV-2026-021,Exact Match,1,0.00,Early,0,0
+TXN-2026-024,INV-2026-022,Exact Match,1,0.00,Early,0,0
+TXN-2026-025,INV-2026-023,Exact Match,1,0.00,Early,0,0
+TXN-2026-026,INV-2026-024,Exact Match,1,0.00,Early,0,0
+TXN-2026-027,INV-2026-025,Exact Match,1,0.00,Early,0,0
+TXN-2026-028,INV-2026-025,Duplicate Payment,1,0.00,Late,1,0
+TXN-2026-029,INV-2026-026,Exact Match,1,0.00,On Time,0,0
+TXN-2026-030,INV-2026-027,Exact Match,1,0.00,On Time,0,0
+TXN-2026-031,INV-2026-028,Exact Match,1,0.00,On Time,0,0
+TXN-2026-032,INV-2026-029,Exact Match,1,0.00,On Time,0,0
+TXN-2026-033,INV-2026-030,Exact Match,1,0.00,On Time,0,0
+TXN-2026-034,INV-2026-031,Exact Match,1,0.00,On Time,0,0
+TXN-2026-035,INV-2026-032,Exact Match,1,0.00,On Time,0,0
+TXN-2026-036,INV-2026-033,Exact Match,1,0.00,On Time,0,0
+TXN-2026-037,INV-2026-034,Exact Match,1,0.00,On Time,0,0
+TXN-2026-038,INV-2026-035,Exact Match,1,0.00,On Time,0,0
+TXN-2026-039,INV-2026-035,Duplicate Payment,1,0.00,Late,1,0
+TXN-2026-040,INV-2026-036,Exact Match,1,0.00,On Time,0,0
+TXN-2026-041,INV-2026-037,Exact Match,1,0.00,On Time,0,0
+TXN-2026-042,INV-2026-038,Exact Match,1,0.00,On Time,0,0
+TXN-2026-043,INV-2026-039,Exact Match,1,0.00,On Time,0,0
+TXN-2026-044,INV-2026-040,Exact Match,1,0.00,On Time,0,0
+TXN-2026-045,INV-2026-041,Exact Match,1,0.00,Late,0,0
+TXN-2026-046,INV-2026-042,Exact Match,1,0.00,Late,0,0
+TXN-2026-047,INV-2026-043,Exact Match,1,0.00,Late,0,0
+TXN-2026-048,INV-2026-044,Exact Match,1,0.00,Late,0,0
+TXN-2026-049,INV-2026-045,Exact Match,1,0.00,Late,0,0
+TXN-2026-050,INV-2026-045,Duplicate Payment,1,0.00,Late,1,0
+TXN-2026-051,INV-2026-046,Exact Match,1,0.00,Late,0,0
+TXN-2026-052,INV-2026-047,Exact Match,1,0.00,Late,0,0
+TXN-2026-053,INV-2026-048,Exact Match,1,0.00,Late,0,0
+TXN-2026-054,INV-2026-049,Exact Match,1,0.00,Late,0,0
+TXN-2026-055,INV-2026-050,Exact Match,1,0.00,Late,0,0
+TXN-2026-056,INV-2026-051,Partial Match,1,-60289.17,Early,0,0
+TXN-2026-057,INV-2026-052,Partial Match,1,-15694.81,Early,0,0
+TXN-2026-058,INV-2026-053,Partial Match,1,-102039.23,Early,0,0
+TXN-2026-059,INV-2026-054,Partial Match,1,-96124.11,Early,0,0
+TXN-2026-060,INV-2026-055,Partial Match,1,-15679.48,Early,0,0
+TXN-2026-061,INV-2026-056,Partial Match,1,-15087.55,Early,0,0
+TXN-2026-062,INV-2026-057,Partial Match,1,-5133.44,Early,0,0
+TXN-2026-063,INV-2026-058,Partial Match,1,-9177.76,On Time,0,0
+TXN-2026-064,INV-2026-059,Partial Match,1,-48286.76,On Time,0,0
+TXN-2026-065,INV-2026-060,Partial Match,1,-92952.22,On Time,0,0
+TXN-2026-066,INV-2026-061,Partial Match,1,-55513.21,On Time,0,0
+TXN-2026-067,INV-2026-062,Partial Match,1,-15148.10,On Time,0,0
+TXN-2026-068,INV-2026-063,Partial Match,1,-18030.07,Late,0,0
+TXN-2026-069,INV-2026-064,Partial Match,1,-20859.18,Late,0,0
+TXN-2026-070,INV-2026-065,Partial Match,1,-100083.95,Late,0,0
+TXN-2026-071,INV-2026-066,Amount Mismatch,1,-850.00,Early,0,0
+TXN-2026-072,INV-2026-067,Amount Mismatch,1,4500.00,Early,0,0
+TXN-2026-073,INV-2026-068,Amount Mismatch,1,3500.00,Early,0,0
+TXN-2026-074,INV-2026-069,Amount Mismatch,1,-850.00,Early,0,0
+TXN-2026-075,INV-2026-070,Amount Mismatch,1,7200.00,Early,0,0
+TXN-2026-076,INV-2026-071,Amount Mismatch,1,-1200.00,On Time,0,0
+TXN-2026-077,INV-2026-072,Amount Mismatch,1,-1500.00,On Time,0,0
+TXN-2026-078,INV-2026-073,Amount Mismatch,1,4500.00,On Time,0,0
+TXN-2026-079,INV-2026-074,Amount Mismatch,1,5000.00,Late,0,0
+TXN-2026-080,INV-2026-075,Amount Mismatch,1,-1200.00,Late,0,0
+,INV-2026-076,No Payment,0,,Not Paid,0,0
+,INV-2026-077,No Payment,0,,Not Paid,0,0
+,INV-2026-078,No Payment,0,,Not Paid,0,0
+,INV-2026-079,No Payment,0,,Not Paid,0,0
+,INV-2026-080,No Payment,0,,Not Paid,0,0
+,INV-2026-081,No Payment,0,,Not Paid,0,0
+,INV-2026-082,No Payment,0,,Not Paid,0,0
+,INV-2026-083,No Payment,0,,Not Paid,0,0
+,INV-2026-084,No Payment,0,,Not Paid,0,0
+,INV-2026-085,No Payment,0,,Not Paid,0,0
+,INV-2026-086,No Payment,0,,Not Paid,0,0
+,INV-2026-087,No Payment,0,,Not Paid,0,0
+,INV-2026-088,No Payment,0,,Not Paid,0,0
+,INV-2026-089,No Payment,0,,Not Paid,0,0
+,INV-2026-090,No Payment,0,,Not Paid,0,0
+,INV-2026-091,No Payment,0,,Not Paid,0,0
+,INV-2026-092,No Payment,0,,Not Paid,0,0
+,INV-2026-093,No Payment,0,,Not Paid,0,0
+,INV-2026-094,No Payment,0,,Not Paid,0,0
+,INV-2026-095,No Payment,0,,Not Paid,0,0
+,INV-2026-096,No Payment,0,,Not Paid,0,0
+,INV-2026-097,No Payment,0,,Not Paid,0,0
+,INV-2026-098,No Payment,0,,Not Paid,0,0
+,INV-2026-099,No Payment,0,,Not Paid,0,0
+,INV-2026-100,No Payment,0,,Not Paid,0,0
+TXN-2026-081,,Unmatched,0,,,0,1
+TXN-2026-082,,Unmatched,0,,,0,1
+TXN-2026-083,,Unmatched,0,,,0,1
+TXN-2026-084,,Unmatched,0,,,0,1
+TXN-2026-085,,Unmatched,0,,,0,1
