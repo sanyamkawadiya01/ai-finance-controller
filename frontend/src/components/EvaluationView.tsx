@@ -7,7 +7,19 @@ interface Props {
 }
 
 export const EvaluationView: React.FC<Props> = ({ evaluation }) => {
-  if (!evaluation) return null;
+  if (!evaluation) {
+    return (
+      <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center', color: '#94a3b8' }}>
+        <Award size={48} style={{ color: '#f59e0b', marginBottom: '1rem', opacity: 0.8 }} />
+        <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f8fafc', marginBottom: '0.5rem' }}>
+          Evaluation Unavailable
+        </h3>
+        <p style={{ maxWidth: '480px', margin: '0 auto', fontSize: '0.9375rem', lineHeight: '1.5' }}>
+          Ground truth labels are currently not uploaded for this dataset. Please upload a <code style={{ color: '#38bdf8' }}>ground_truth.csv</code> file in the <strong>Upload Dataset</strong> tab to evaluate model performance, accuracy, precision, recall, and confusion matrix.
+        </p>
+      </div>
+    );
+  }
 
   const matchTypes = ['exact', 'partial', 'mismatch', 'unmatched', 'duplicate'];
 
