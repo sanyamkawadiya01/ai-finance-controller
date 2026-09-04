@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { DatasetStatus, DatasetUploadResponse } from '../types';
-import { Upload, CheckCircle2, AlertCircle, RefreshCw, FileSpreadsheet, RotateCcw, AlertTriangle } from 'lucide-react';
+import { Upload, CheckCircle2, AlertCircle, FileSpreadsheet, RotateCcw, X, Database } from 'lucide-react';
 
 interface Props {
   datasetStatus: DatasetStatus | null;
@@ -55,24 +55,6 @@ export const UploadDataset: React.FC<Props> = ({ datasetStatus, onDatasetUpdated
     }
   };
 
-  const handleReset = async () => {
-    setIsResetting(true);
-    setErrorMsg(null);
-    setUploadResult(null);
-    try {
-      await fetch('http://localhost:8000/api/dataset/reset', { method: 'POST' });
-      setInvoicesFile(null);
-      setTransactionsFile(null);
-      setGroundTruthFile(null);
-      await onDatasetUpdated();
-    } catch (err) {
-      console.error("Reset error:", err);
-      setErrorMsg("Failed to load sample dataset.");
-    } finally {
-      setIsResetting(false);
-    }
-  };
-
   const handleClear = async () => {
     setIsResetting(true);
     setErrorMsg(null);
@@ -92,23 +74,21 @@ export const UploadDataset: React.FC<Props> = ({ datasetStatus, onDatasetUpdated
   };
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-      {/* Upload Form Card */}
-      <div className="glass-panel" style={{ padding: '1.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
-          <Upload size={22} style={{ color: '#38bdf8' }} />
-          <h2 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#f8fafc' }}>
-            Upload Custom Dataset
-          </h2>
-        </div>
+    <div className="upload-grid">
+      {/* Step-Based Upload Form */}
+      <form onSubmit={handleUpload} className="upload-cards-container">
+        {/* Card 1: Invoices CSV */}
+        <div className="upload-card">
+          <div className="upload-card-header">
+            <div className="upload-card-title-group">
+              <div className="step-number-badge">1</div>
+              <span className="upload-title">Invoices CSV</span>
+            </div>
+            <span className="req-badge required">Required</span>
+          </div>
 
-        <form onSubmit={handleUpload} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          {/* Invoices File Field */}
-          <div>
-            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: '#cbd5e1', marginBottom: '0.35rem' }}>
-              Invoices CSV <span style={{ color: '#f43f5e' }}>*</span>
-            </label>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          {!invoicesFile ? (
+            <label htmlFor="invoices-input" className="file-dropzone-label">
               <input
                 type="file"
                 accept=".csv"
@@ -116,39 +96,59 @@ export const UploadDataset: React.FC<Props> = ({ datasetStatus, onDatasetUpdated
                 style={{ display: 'none' }}
                 onChange={(e) => setInvoicesFile(e.target.files?.[0] || null)}
               />
-              <label
-                htmlFor="invoices-input"
-                style={{
-                  background: 'rgba(30, 41, 59, 0.8)',
-                  border: '1px border-subtle',
-                  borderStyle: 'dashed',
-                  borderColor: invoicesFile ? '#38bdf8' : 'var(--border-subtle)',
-                  padding: '0.625rem 1rem',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  fontSize: '0.875rem',
-                  color: invoicesFile ? '#38bdf8' : '#94a3b8',
-                  flexGrow: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem'
-                }}
+              <div className="dropzone-box">
+                <FileSpreadsheet size={24} color="var(--primary-blue)" />
+                <div className="dropzone-text">
+                  <strong>Click to select</strong> or drag and drop Invoices CSV
+                </div>
+              </div>
+            </label>
+          ) : (
+            <div className="selected-file-row">
+              <div className="file-info-group">
+                <CheckCircle2 size={18} color="var(--primary-blue)" />
+                <span className="file-name">{invoicesFile.name}</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+                  ({(invoicesFile.size / 1024).toFixed(1)} KB)
+                </span>
+              </div>
+              <button
+                type="button"
+                className="clear-btn"
+                onClick={() => setInvoicesFile(null)}
+                title="Remove file"
               >
-                <FileSpreadsheet size={18} />
-                {invoicesFile ? invoicesFile.name : 'Choose Invoices CSV...'}
-              </label>
+                <X size={16} />
+              </button>
             </div>
-            <span style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.25rem', display: 'block' }}>
-              Required columns: invoice_id, customer_id, customer_name, invoice_date, due_date, invoice_amount, currency
-            </span>
+          )}
+
+          <div>
+            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Expected Columns:</span>
+            <div className="expected-columns-pills">
+              <span className="column-pill">invoice_id</span>
+              <span className="column-pill">customer_id</span>
+              <span className="column-pill">customer_name</span>
+              <span className="column-pill">invoice_date</span>
+              <span className="column-pill">due_date</span>
+              <span className="column-pill">invoice_amount</span>
+              <span className="column-pill">currency</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 2: Bank Transactions CSV */}
+        <div className="upload-card">
+          <div className="upload-card-header">
+            <div className="upload-card-title-group">
+              <div className="step-number-badge">2</div>
+              <span className="upload-title">Bank Transactions CSV</span>
+            </div>
+            <span className="req-badge required">Required</span>
           </div>
 
-          {/* Bank Transactions File Field */}
-          <div>
-            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: '#cbd5e1', marginBottom: '0.35rem' }}>
-              Bank Transactions CSV <span style={{ color: '#f43f5e' }}>*</span>
-            </label>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          {!transactionsFile ? (
+            <label htmlFor="transactions-input" className="file-dropzone-label">
               <input
                 type="file"
                 accept=".csv"
@@ -156,39 +156,59 @@ export const UploadDataset: React.FC<Props> = ({ datasetStatus, onDatasetUpdated
                 style={{ display: 'none' }}
                 onChange={(e) => setTransactionsFile(e.target.files?.[0] || null)}
               />
-              <label
-                htmlFor="transactions-input"
-                style={{
-                  background: 'rgba(30, 41, 59, 0.8)',
-                  border: '1px border-subtle',
-                  borderStyle: 'dashed',
-                  borderColor: transactionsFile ? '#38bdf8' : 'var(--border-subtle)',
-                  padding: '0.625rem 1rem',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  fontSize: '0.875rem',
-                  color: transactionsFile ? '#38bdf8' : '#94a3b8',
-                  flexGrow: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem'
-                }}
+              <div className="dropzone-box">
+                <FileSpreadsheet size={24} color="var(--primary-blue)" />
+                <div className="dropzone-text">
+                  <strong>Click to select</strong> or drag and drop Bank Transactions CSV
+                </div>
+              </div>
+            </label>
+          ) : (
+            <div className="selected-file-row">
+              <div className="file-info-group">
+                <CheckCircle2 size={18} color="var(--primary-blue)" />
+                <span className="file-name">{transactionsFile.name}</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+                  ({(transactionsFile.size / 1024).toFixed(1)} KB)
+                </span>
+              </div>
+              <button
+                type="button"
+                className="clear-btn"
+                onClick={() => setTransactionsFile(null)}
+                title="Remove file"
               >
-                <FileSpreadsheet size={18} />
-                {transactionsFile ? transactionsFile.name : 'Choose Bank Transactions CSV...'}
-              </label>
+                <X size={16} />
+              </button>
             </div>
-            <span style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.25rem', display: 'block' }}>
-              Required columns: transaction_id, transaction_date, description, customer_name, reference, amount, currency
-            </span>
+          )}
+
+          <div>
+            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Expected Columns:</span>
+            <div className="expected-columns-pills">
+              <span className="column-pill">transaction_id</span>
+              <span className="column-pill">transaction_date</span>
+              <span className="column-pill">description</span>
+              <span className="column-pill">customer_name</span>
+              <span className="column-pill">reference</span>
+              <span className="column-pill">amount</span>
+              <span className="column-pill">currency</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 3: Ground Truth CSV (Optional) */}
+        <div className="upload-card">
+          <div className="upload-card-header">
+            <div className="upload-card-title-group">
+              <div className="step-number-badge" style={{ backgroundColor: 'var(--secondary-purple-light)', color: 'var(--secondary-purple)' }}>3</div>
+              <span className="upload-title">Ground Truth CSV</span>
+            </div>
+            <span className="req-badge optional">Optional Benchmark</span>
           </div>
 
-          {/* Ground Truth File Field (Optional) */}
-          <div>
-            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: '#cbd5e1', marginBottom: '0.35rem' }}>
-              Ground Truth CSV <span style={{ color: '#64748b', fontWeight: 400 }}>(Optional)</span>
-            </label>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          {!groundTruthFile ? (
+            <label htmlFor="ground-truth-input" className="file-dropzone-label">
               <input
                 type="file"
                 accept=".csv"
@@ -196,162 +216,160 @@ export const UploadDataset: React.FC<Props> = ({ datasetStatus, onDatasetUpdated
                 style={{ display: 'none' }}
                 onChange={(e) => setGroundTruthFile(e.target.files?.[0] || null)}
               />
-              <label
-                htmlFor="ground-truth-input"
-                style={{
-                  background: 'rgba(30, 41, 59, 0.8)',
-                  border: '1px border-subtle',
-                  borderStyle: 'dashed',
-                  borderColor: groundTruthFile ? '#c084fc' : 'var(--border-subtle)',
-                  padding: '0.625rem 1rem',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  fontSize: '0.875rem',
-                  color: groundTruthFile ? '#c084fc' : '#94a3b8',
-                  flexGrow: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem'
-                }}
+              <div className="dropzone-box">
+                <FileSpreadsheet size={24} color="var(--secondary-purple)" />
+                <div className="dropzone-text">
+                  <strong>Click to select</strong> Ground Truth CSV (Optional)
+                </div>
+              </div>
+            </label>
+          ) : (
+            <div className="selected-file-row" style={{ backgroundColor: 'var(--secondary-purple-light)', borderColor: 'var(--secondary-purple-border)' }}>
+              <div className="file-info-group">
+                <CheckCircle2 size={18} color="var(--secondary-purple)" />
+                <span className="file-name" style={{ color: 'var(--secondary-purple)' }}>{groundTruthFile.name}</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+                  ({(groundTruthFile.size / 1024).toFixed(1)} KB)
+                </span>
+              </div>
+              <button
+                type="button"
+                className="clear-btn"
+                onClick={() => setGroundTruthFile(null)}
+                title="Remove file"
               >
-                <FileSpreadsheet size={18} />
-                {groundTruthFile ? groundTruthFile.name : 'Choose Ground Truth CSV (Optional)...'}
-              </label>
-            </div>
-            <span style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.25rem', display: 'block' }}>
-              Required columns if uploaded: transaction_id, invoice_id, match_type, payment_status, is_duplicate
-            </span>
-          </div>
-
-          {errorMsg && (
-            <div style={{ background: 'rgba(244, 63, 94, 0.15)', border: '1px solid #f43f5e', color: '#f43f5e', padding: '0.75rem', borderRadius: '6px', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <AlertCircle size={18} />
-              {errorMsg}
+                <X size={16} />
+              </button>
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={isUploading || !invoicesFile || !transactionsFile}
-            className="action-btn"
-            style={{ width: '100%', justifyContent: 'center', padding: '0.75rem' }}
-          >
-            <RefreshCw size={16} className={isUploading ? 'animate-spin' : ''} />
-            {isUploading ? 'Validating & Uploading...' : 'Validate & Upload Dataset'}
-          </button>
-        </form>
-      </div>
+          <div>
+            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Expected Columns:</span>
+            <div className="expected-columns-pills">
+              <span className="column-pill">transaction_id</span>
+              <span className="column-pill">invoice_id</span>
+              <span className="column-pill">match_type</span>
+              <span className="column-pill">payment_status</span>
+              <span className="column-pill">is_duplicate</span>
+            </div>
+          </div>
+        </div>
 
-      {/* Active Dataset Status & Validation Results Panel */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-        {/* Active Dataset Card */}
-        <div className="glass-panel" style={{ padding: '1.5rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-            <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#f8fafc' }}>
-              Currently Active Dataset Status
+        {errorMsg && (
+          <div style={{
+            backgroundColor: 'var(--critical-red-light)',
+            border: '1px solid var(--critical-red-border)',
+            color: 'var(--critical-red)',
+            padding: '0.85rem 1rem',
+            borderRadius: '8px',
+            fontSize: '0.875rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}>
+            <AlertCircle size={18} style={{ flexShrink: 0 }} />
+            {errorMsg}
+          </div>
+        )}
+
+        <button
+          type="submit"
+          disabled={isUploading || !invoicesFile || !transactionsFile}
+          className="btn-primary"
+          style={{ width: '100%', padding: '0.85rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+        >
+          <Upload size={18} className={isUploading ? 'animate-spin' : ''} />
+          {isUploading ? 'Validating & Uploading...' : 'Upload & Validate Dataset'}
+        </button>
+      </form>
+
+      {/* Active Dataset Status & Validation Side Panel */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+        <div className="white-card">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', marginBottom: '1rem', paddingBottom: '0.75rem', borderBottom: '1px solid var(--border-subtle)' }}>
+            <Database size={18} color="var(--primary-blue)" />
+            <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-main)' }}>
+              Active Dataset Pipeline Status
             </h3>
-            {datasetStatus && (
-              <span style={{
-                background: datasetStatus.source === 'uploaded' ? 'rgba(168, 85, 247, 0.2)' : 'rgba(245, 158, 11, 0.2)',
-                color: datasetStatus.source === 'uploaded' ? '#c084fc' : '#f59e0b',
-                padding: '0.25rem 0.625rem', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: 600,
-                textTransform: 'uppercase'
-              }}>
-                {datasetStatus.source === 'uploaded' ? 'Active User Dataset' : 'No Dataset'}
-              </span>
-            )}
           </div>
 
           {datasetStatus ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.875rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '0.5rem', borderBottom: '1px solid var(--border-subtle)' }}>
-                <span style={{ color: '#94a3b8' }}>Total Invoices:</span>
-                <strong style={{ color: '#38bdf8' }}>{datasetStatus.invoices_count}</strong>
+                <span style={{ color: 'var(--text-secondary)' }}>Dataset Source:</span>
+                <span className="badge badge-exact" style={{ textTransform: 'capitalize' }}>
+                  {datasetStatus.source === 'uploaded' ? 'Custom Upload' : 'Sample Default'}
+                </span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '0.5rem', borderBottom: '1px solid var(--border-subtle)' }}>
-                <span style={{ color: '#94a3b8' }}>Bank Transactions:</span>
-                <strong style={{ color: '#818cf8' }}>{datasetStatus.transactions_count}</strong>
+                <span style={{ color: 'var(--text-secondary)' }}>Invoices:</span>
+                <strong className="code-identifier">{datasetStatus.invoices_count} records</strong>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '0.5rem', borderBottom: '1px solid var(--border-subtle)' }}>
-                <span style={{ color: '#94a3b8' }}>Ground Truth Benchmark:</span>
-                <strong style={{ color: datasetStatus.ground_truth_available ? '#34d399' : '#f59e0b' }}>
-                  {datasetStatus.ground_truth_available ? 'Available ✓' : 'Not Uploaded (Disabled)'}
+                <span style={{ color: 'var(--text-secondary)' }}>Bank Transactions:</span>
+                <strong className="code-identifier" style={{ color: 'var(--secondary-purple)' }}>{datasetStatus.transactions_count} records</strong>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '0.5rem', borderBottom: '1px solid var(--border-subtle)' }}>
+                <span style={{ color: 'var(--text-secondary)' }}>Ground Truth Benchmark:</span>
+                <strong style={{ color: datasetStatus.ground_truth_available ? 'var(--success-green)' : 'var(--warning-amber)' }}>
+                  {datasetStatus.ground_truth_available ? 'Available ✓' : 'Not Uploaded'}
                 </strong>
               </div>
 
-              {datasetStatus.source !== 'none' && (
-                <button
-                  type="button"
-                  onClick={handleClear}
-                  disabled={isResetting}
-                  style={{
-                    marginTop: '0.5rem',
-                    background: 'rgba(244, 63, 94, 0.15)',
-                    border: '1px solid rgba(244, 63, 94, 0.3)',
-                    color: '#fb7185',
-                    padding: '0.5rem 0.75rem',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    fontSize: '0.8125rem',
-                    fontWeight: 600,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.35rem'
-                  }}
-                >
-                  <RotateCcw size={14} className={isResetting ? 'animate-spin' : ''} />
-                  Clear Current Dataset
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={handleClear}
+                disabled={isResetting}
+                style={{
+                  marginTop: '0.5rem',
+                  backgroundColor: 'var(--bg-subtle)',
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-main)',
+                  padding: '0.5rem 0.85rem',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  fontSize: '0.8125rem',
+                  fontWeight: 600,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.4rem'
+                }}
+              >
+                <RotateCcw size={14} className={isResetting ? 'animate-spin' : ''} />
+                Reset to Sample Dataset
+              </button>
             </div>
           ) : (
-            <div style={{ color: '#64748b', fontSize: '0.875rem' }}>Loading dataset status...</div>
+            <div style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Loading dataset status...</div>
           )}
         </div>
 
-        {/* Validation Result Box */}
         {uploadResult && (
-          <div className="glass-panel" style={{ padding: '1.5rem', borderLeft: uploadResult.success ? '4px solid #10b981' : '4px solid #f43f5e' }}>
+          <div className="white-card" style={{ borderLeft: uploadResult.success ? '4px solid var(--success-green)' : '4px solid var(--critical-red)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
               {uploadResult.success ? (
-                <CheckCircle2 size={20} style={{ color: '#34d399' }} />
+                <CheckCircle2 size={20} color="var(--success-green)" />
               ) : (
-                <AlertCircle size={20} style={{ color: '#f43f5e' }} />
+                <AlertCircle size={20} color="var(--critical-red)" />
               )}
-              <h4 style={{ fontSize: '1rem', fontWeight: 700, color: uploadResult.success ? '#34d399' : '#f43f5e' }}>
-                {uploadResult.success ? '✓ Dataset Valid & Pipeline Loaded' : '✗ Dataset Validation Errors'}
+              <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: uploadResult.success ? 'var(--success-green)' : 'var(--critical-red)' }}>
+                {uploadResult.success ? 'Schema Validated & Loaded' : 'Validation Error'}
               </h4>
             </div>
 
             {uploadResult.success ? (
-              <div style={{ fontSize: '0.875rem', color: '#cbd5e1', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                <div>Invoices Loaded: <strong>{uploadResult.invoices_count}</strong></div>
-                <div>Bank Transactions Loaded: <strong>{uploadResult.transactions_count}</strong></div>
-                <div>Ground Truth Records: <strong>{uploadResult.ground_truth_available ? uploadResult.ground_truth_count : 'None'}</strong></div>
+              <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                <div>Invoices: <strong>{uploadResult.invoices_count}</strong></div>
+                <div>Transactions: <strong>{uploadResult.transactions_count}</strong></div>
+                <div>Ground Truth: <strong>{uploadResult.ground_truth_available ? uploadResult.ground_truth_count : 'None'}</strong></div>
               </div>
             ) : (
-              <div style={{ marginTop: '0.5rem' }}>
-                <strong style={{ fontSize: '0.8125rem', color: '#f43f5e', textTransform: 'uppercase' }}>Errors:</strong>
-                <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', color: '#fb7185', fontSize: '0.8125rem', marginTop: '0.25rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                  {uploadResult.errors.map((err, idx) => (
-                    <li key={idx}>{err}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {uploadResult.warnings.length > 0 && (
-              <div style={{ marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid var(--border-subtle)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: '#fbbf24', fontSize: '0.8125rem', fontWeight: 600 }}>
-                  <AlertTriangle size={14} /> Warnings ({uploadResult.warnings.length}):
-                </div>
-                <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', color: '#fbbf24', fontSize: '0.8125rem', marginTop: '0.25rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                  {uploadResult.warnings.map((warn, idx) => (
-                    <li key={idx}>{warn}</li>
-                  ))}
-                </ul>
-              </div>
+              <ul style={{ paddingLeft: '1rem', color: 'var(--critical-red)', fontSize: '0.8125rem' }}>
+                {uploadResult.errors.map((err, idx) => (
+                  <li key={idx}>{err}</li>
+                ))}
+              </ul>
             )}
           </div>
         )}

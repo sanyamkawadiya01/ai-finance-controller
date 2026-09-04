@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { ReconciliationResult } from '../types';
-import { Eye, AlertCircle, CheckCircle, UserCheck, Upload } from 'lucide-react';
+import { Eye, AlertCircle, CheckCircle2, UserCheck, Search, Filter, RotateCcw, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Props {
   results: ReconciliationResult[];
@@ -8,30 +8,41 @@ interface Props {
   onGoToUpload?: () => void;
 }
 
+const ITEMS_PER_PAGE = 10;
+
 export const ReconciliationTable: React.FC<Props> = ({ results, onSelectTransaction, onGoToUpload }) => {
   const [search, setSearch] = useState('');
   const [matchFilter, setMatchFilter] = useState('ALL');
   const [confidenceFilter, setConfidenceFilter] = useState('ALL');
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [reviewOnly, setReviewOnly] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   if (results.length === 0) {
     return (
-      <div className="glass-panel" style={{ padding: '3.5rem 2rem', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem' }}>
-        <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(56, 189, 248, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#38bdf8' }}>
-          <Upload size={32} />
+      <div className="table-card" style={{ padding: '3.5rem 2rem', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+        <div style={{
+          width: '56px',
+          height: '56px',
+          borderRadius: '14px',
+          backgroundColor: 'var(--primary-blue-light)',
+          color: 'var(--primary-blue)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <Filter size={28} />
         </div>
         <div>
-          <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f8fafc', marginBottom: '0.5rem' }}>
-            No Reconciliation Data Available
+          <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.4rem' }}>
+            No Reconciliation Pipeline Data
           </h3>
-          <p style={{ color: '#94a3b8', maxWidth: '520px', fontSize: '0.875rem', lineHeight: '1.5', margin: '0 auto' }}>
-            The reconciliation table is currently empty. Please upload your <strong>Invoices CSV</strong> and <strong>Bank Transactions CSV</strong> files to run the engine and view results.
+          <p style={{ color: 'var(--text-secondary)', maxWidth: '480px', fontSize: '0.875rem', margin: '0 auto' }}>
+            The reconciliation engine matrix is unpopulated. Upload your Invoices CSV and Bank Transactions CSV to trigger automatic matching.
           </p>
         </div>
         {onGoToUpload && (
-          <button className="action-btn" onClick={onGoToUpload} style={{ marginTop: '0.5rem' }}>
-            <Upload size={16} />
+          <button className="btn-primary" onClick={onGoToUpload} style={{ marginTop: '0.5rem' }}>
             Upload Dataset Now
           </button>
         )}
@@ -39,6 +50,7 @@ export const ReconciliationTable: React.FC<Props> = ({ results, onSelectTransact
     );
   }
 
+  // Filtering logic
   const filteredResults = results.filter(r => {
     const query = search.toLowerCase();
     const matchesSearch =
@@ -55,12 +67,28 @@ export const ReconciliationTable: React.FC<Props> = ({ results, onSelectTransact
     return true;
   });
 
+  // Pagination calculations
+  const totalPages = Math.ceil(filteredResults.length / ITEMS_PER_PAGE) || 1;
+  const paginatedResults = filteredResults.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const resetFilters = () => {
+    setSearch('');
+    setMatchFilter('ALL');
+    setConfidenceFilter('ALL');
+    setStatusFilter('ALL');
+    setReviewOnly(false);
+    setCurrentPage(1);
+  };
+
   const getMatchBadge = (type: string) => {
     switch (type) {
       case 'exact':
-        return <span className="badge badge-exact">Exact</span>;
+        return <span className="badge badge-exact">Exact Match</span>;
       case 'partial':
-        return <span className="badge badge-partial">Partial</span>;
+        return <span className="badge badge-partial">Partial Match</span>;
       case 'duplicate':
         return <span className="badge badge-duplicate">Duplicate</span>;
       case 'mismatch':
@@ -88,15 +116,15 @@ export const ReconciliationTable: React.FC<Props> = ({ results, onSelectTransact
   const getActionPill = (res: ReconciliationResult) => {
     if (res.human_override) {
       return (
-        <span style={{ color: '#c084fc', fontWeight: 600, fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-          <UserCheck size={14} /> Overridden ({res.human_override.status})
+        <span className="badge badge-review" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+          <UserCheck size={13} /> Overridden ({res.human_override.status})
         </span>
       );
     }
     if (res.action === 'AUTO_RECONCILE') {
       return (
-        <span style={{ color: '#34d399', fontWeight: 600, fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-          <CheckCircle size={14} /> Auto Reconciled
+        <span className="badge badge-exact" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+          <CheckCircle2 size={13} /> Auto Reconciled
         </span>
       );
     }
@@ -104,145 +132,171 @@ export const ReconciliationTable: React.FC<Props> = ({ results, onSelectTransact
       return (
         <button
           onClick={(e) => { e.stopPropagation(); onSelectTransaction(res); }}
-          style={{
-            background: 'rgba(168, 85, 247, 0.2)',
-            border: '1px solid rgba(168, 85, 247, 0.4)',
-            color: '#c084fc',
-            padding: '0.25rem 0.625rem',
-            borderRadius: '6px',
-            cursor: 'pointer',
-            fontSize: '0.75rem',
-            fontWeight: 600,
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '4px'
-          }}
+          className="badge badge-review"
+          style={{ cursor: 'pointer', border: '1px solid var(--secondary-purple-border)' }}
         >
           <AlertCircle size={13} /> Review Needed
         </button>
       );
     }
-    return <span style={{ color: '#64748b', fontSize: '0.75rem' }}>Unmatched</span>;
+    return <span className="badge badge-unpaid">Unmatched</span>;
   };
 
   return (
-    <div className="glass-panel" style={{ padding: '1.5rem' }}>
+    <div className="table-card">
+      {/* Filter and Search Bar Header */}
       <div className="filter-bar">
-        <div style={{ position: 'relative', display: 'inline-block' }}>
+        <div className="search-input-wrapper">
+          <Search size={15} className="search-icon" />
           <input
             type="text"
             className="search-input"
-            placeholder="Search ID, customer, invoice..."
+            placeholder="Search Txn ID, customer, invoice..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => { setSearch(e.target.value); setCurrentPage(1); }}
           />
         </div>
 
-        <select className="select-filter" value={matchFilter} onChange={(e) => setMatchFilter(e.target.value)}>
-          <option value="ALL">All Match Types</option>
-          <option value="EXACT">Exact Match</option>
-          <option value="PARTIAL">Partial Match</option>
-          <option value="DUPLICATE">Duplicate Payment</option>
-          <option value="MISMATCH">Mismatch</option>
-          <option value="UNMATCHED">Unmatched</option>
-        </select>
+        <div className="filter-group">
+          <select
+            className="filter-select"
+            value={matchFilter}
+            onChange={(e) => { setMatchFilter(e.target.value); setCurrentPage(1); }}
+          >
+            <option value="ALL">All Match Types</option>
+            <option value="EXACT">Exact Match</option>
+            <option value="PARTIAL">Partial Match</option>
+            <option value="DUPLICATE">Duplicate Payment</option>
+            <option value="MISMATCH">Mismatch</option>
+            <option value="UNMATCHED">Unmatched</option>
+          </select>
 
-        <select className="select-filter" value={confidenceFilter} onChange={(e) => setConfidenceFilter(e.target.value)}>
-          <option value="ALL">All Confidence Levels</option>
-          <option value="HIGH">High Confidence (&gt;=85%)</option>
-          <option value="MEDIUM">Medium Confidence (60-84%)</option>
-          <option value="LOW">Low Confidence (&lt;60%)</option>
-        </select>
+          <select
+            className="filter-select"
+            value={confidenceFilter}
+            onChange={(e) => { setConfidenceFilter(e.target.value); setCurrentPage(1); }}
+          >
+            <option value="ALL">All Confidence</option>
+            <option value="HIGH">High (&gt;=85%)</option>
+            <option value="MEDIUM">Medium (60-84%)</option>
+            <option value="LOW">Low (&lt;60%)</option>
+          </select>
 
-        <select className="select-filter" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-          <option value="ALL">All Payment Statuses</option>
-          <option value="ON_TIME">On Time</option>
-          <option value="LATE">Late</option>
-          <option value="OVERDUE">Overdue</option>
-          <option value="UNPAID">Unpaid</option>
-        </select>
+          <select
+            className="filter-select"
+            value={statusFilter}
+            onChange={(e) => { setStatusFilter(e.target.value); setCurrentPage(1); }}
+          >
+            <option value="ALL">All Payment Statuses</option>
+            <option value="ON_TIME">On Time</option>
+            <option value="LATE">Late</option>
+            <option value="OVERDUE">Overdue</option>
+            <option value="UNPAID">Unpaid</option>
+          </select>
 
-        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', cursor: 'pointer', marginLeft: 'auto' }}>
-          <input
-            type="checkbox"
-            checked={reviewOnly}
-            onChange={(e) => setReviewOnly(e.target.checked)}
-          />
-          <span style={{ color: '#c084fc', fontWeight: 600 }}>Needs Human Review</span>
-        </label>
+          <label className={`checkbox-label ${reviewOnly ? 'active' : ''}`}>
+            <input
+              type="checkbox"
+              checked={reviewOnly}
+              onChange={(e) => { setReviewOnly(e.target.checked); setCurrentPage(1); }}
+            />
+            <span>Needs Review</span>
+          </label>
+
+          {(search || matchFilter !== 'ALL' || confidenceFilter !== 'ALL' || statusFilter !== 'ALL' || reviewOnly) && (
+            <button className="clear-btn" onClick={resetFilters} title="Reset all filters">
+              <RotateCcw size={14} style={{ display: 'inline', marginRight: '4px' }} />
+              Clear Filters
+            </button>
+          )}
+        </div>
       </div>
 
+      {/* Main Clean Enterprise Table */}
       <div className="table-container">
         <table className="data-table">
           <thead>
             <tr>
-              <th>Txn ID</th>
+              <th>Transaction ID</th>
               <th>Date</th>
               <th>Customer</th>
-              <th>Amount</th>
+              <th style={{ textAlign: 'right' }}>Amount</th>
               <th>Matched Invoice</th>
               <th>Match Type</th>
-              <th>Confidence</th>
+              <th>AI Confidence</th>
               <th>Payment Status</th>
               <th>Action</th>
-              <th>Detail</th>
+              <th style={{ textAlign: 'center' }}>Inspect</th>
             </tr>
           </thead>
           <tbody>
-            {filteredResults.length === 0 ? (
+            {paginatedResults.length === 0 ? (
               <tr>
-                <td colSpan={10} style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>
-                  No transactions match the selected filters.
+                <td colSpan={10} style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-secondary)' }}>
+                  No transactions match the selected filter criteria.
                 </td>
               </tr>
             ) : (
-              filteredResults.map((r) => (
-                <tr key={r.transaction_id} onClick={() => onSelectTransaction(r)} style={{ cursor: 'pointer' }}>
-                  <td style={{ fontWeight: 600, color: '#38bdf8' }}>{r.transaction_id}</td>
-                  <td>{r.transaction_date}</td>
-                  <td>{r.customer_name}</td>
-                  <td style={{ fontWeight: 600 }}>
-                    {r.currency} {r.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+              paginatedResults.map((r) => (
+                <tr key={r.transaction_id} onClick={() => onSelectTransaction(r)} className="interactive-row">
+                  <td className="code-identifier">
+                    {r.transaction_id}
+                  </td>
+                  <td style={{ color: 'var(--text-secondary)', fontSize: '0.8125rem' }}>{r.transaction_date}</td>
+                  <td style={{ fontWeight: 600 }}>{r.customer_name}</td>
+                  <td className="amount-cell">
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginRight: '3px' }}>
+                      {r.currency === 'INR' || !r.currency ? '₹' : r.currency}
+                    </span>
+                    {r.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                   </td>
                   <td>
                     {r.invoice_id ? (
-                      <span style={{ color: '#818cf8', fontWeight: 600 }}>{r.invoice_id}</span>
+                      <span className="code-identifier invoice">
+                        {r.invoice_id}
+                      </span>
                     ) : (
-                      <span style={{ color: '#64748b' }}>—</span>
+                      <span style={{ color: 'var(--text-muted)' }}>—</span>
                     )}
                   </td>
                   <td>{getMatchBadge(r.match_type)}</td>
                   <td>
-                    <div>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
                       <div className="confidence-bar-bg">
                         <div
                           className="confidence-bar-fill"
                           style={{
                             width: `${(r.confidence * 100).toFixed(0)}%`,
-                            backgroundColor: r.confidence >= 0.85 ? '#10b981' : r.confidence >= 0.60 ? '#f59e0b' : '#f43f5e'
+                            backgroundColor: r.confidence >= 0.85 ? 'var(--success-green)' : r.confidence >= 0.60 ? 'var(--warning-amber)' : 'var(--critical-red)'
                           }}
                         />
                       </div>
-                      <span style={{ fontSize: '0.75rem', fontWeight: 600 }}>
+                      <span style={{
+                        fontSize: '0.78rem',
+                        fontWeight: 700,
+                        fontFamily: 'var(--font-mono)',
+                        color: r.confidence >= 0.85 ? 'var(--success-green)' : r.confidence >= 0.60 ? 'var(--warning-amber)' : 'var(--critical-red)'
+                      }}>
                         {(r.confidence * 100).toFixed(0)}%
                       </span>
                     </div>
                   </td>
                   <td>{getStatusBadge(r.payment_status, r.days_late)}</td>
                   <td>{getActionPill(r)}</td>
-                  <td>
+                  <td style={{ textAlign: 'center' }}>
                     <button
                       onClick={(e) => { e.stopPropagation(); onSelectTransaction(r); }}
                       style={{
                         background: 'transparent',
-                        border: 'none',
-                        color: '#94a3b8',
+                        border: '1px solid var(--border-color)',
+                        color: 'var(--text-secondary)',
                         cursor: 'pointer',
-                        padding: '4px'
+                        padding: '4px 8px',
+                        borderRadius: '6px'
                       }}
-                      title="Inspect Transaction"
+                      title="Inspect AI Breakdown"
                     >
-                      <Eye size={16} />
+                      <Eye size={15} />
                     </button>
                   </td>
                 </tr>
@@ -250,6 +304,34 @@ export const ReconciliationTable: React.FC<Props> = ({ results, onSelectTransact
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination Footer */}
+      <div className="table-pagination">
+        <div className="pagination-text">
+          Showing <strong>{filteredResults.length > 0 ? (currentPage - 1) * ITEMS_PER_PAGE + 1 : 0}</strong> to{' '}
+          <strong>{Math.min(currentPage * ITEMS_PER_PAGE, filteredResults.length)}</strong> of{' '}
+          <strong>{filteredResults.length}</strong> transactions
+        </div>
+        <div className="pagination-buttons">
+          <button
+            className="pagination-btn"
+            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft size={14} style={{ display: 'inline', verticalAlign: 'middle' }} /> Previous
+          </button>
+          <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', padding: '0 0.5rem' }}>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            className="pagination-btn"
+            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages || totalPages === 0}
+          >
+            Next <ChevronRight size={14} style={{ display: 'inline', verticalAlign: 'middle' }} />
+          </button>
+        </div>
       </div>
     </div>
   );
