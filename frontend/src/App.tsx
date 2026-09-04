@@ -7,21 +7,15 @@ import type {
   BankTransaction,
   DatasetStatus
 } from './types';
+import { Sidebar } from './components/Sidebar';
+import { Header } from './components/Header';
 import { DashboardSummaryView } from './components/DashboardSummary';
 import { ReconciliationTable } from './components/ReconciliationTable';
 import { TransactionDetailModal } from './components/TransactionDetailModal';
 import { EvaluationView } from './components/EvaluationView';
 import { DataInspector } from './components/DataInspector';
 import { UploadDataset } from './components/UploadDataset';
-import {
-  Bot,
-  RefreshCw,
-  LayoutDashboard,
-  Award,
-  Database,
-  Upload,
-  AlertCircle
-} from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 
 const API_BASE = 'http://localhost:8000/api';
 
@@ -64,12 +58,12 @@ export const App: React.FC = () => {
         } else {
           setEvaluation(null);
         }
-      } catch (err) {
+      } catch {
         setEvaluation(null);
       }
     } catch (err: any) {
       console.error("Failed to connect to backend:", err);
-      setErrorMsg("Could not connect to FastAPI Backend at http://localhost:8000. Please ensure server is running.");
+      setErrorMsg("Could not connect to FastAPI Backend at http://localhost:8000. Please ensure the server is running.");
     }
   };
 
@@ -114,135 +108,89 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="app-container">
-      {/* App Header */}
-      <header className="app-header">
-        <div>
-          <div className="brand-title">
-            <Bot size={28} style={{ color: '#38bdf8' }} />
-            <span>AI Finance Controller</span>
-          </div>
-          <p className="brand-subtitle">
-            Deterministic Rule-Based + AI/Fuzzy Payment Reconciliation Engine
-          </p>
-        </div>
+    <div className="app-layout">
+      {/* Fixed Left Sidebar */}
+      <Sidebar
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        resultsCount={results.length}
+        hasGroundTruth={Boolean(datasetStatus?.ground_truth_available)}
+      />
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          {datasetStatus && (
+      {/* Main Page Area */}
+      <div className="app-main-content">
+        {/* Top Header */}
+        <Header
+          activeTab={activeTab}
+          datasetStatus={datasetStatus}
+          isReconciling={isReconciling}
+          onTriggerReconciliation={handleTriggerReconciliation}
+        />
+
+        {/* Dynamic View Canvas */}
+        <main className="view-container">
+          {/* Global Error Banner */}
+          {errorMsg && (
             <div style={{
+              backgroundColor: 'var(--critical-red-light)',
+              border: '1px solid var(--critical-red-border)',
+              color: 'var(--critical-red)',
+              padding: '0.85rem 1.25rem',
+              borderRadius: '10px',
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
-              fontSize: '0.8125rem',
-              color: datasetStatus.source === 'uploaded' ? '#c084fc' : datasetStatus.source === 'default' ? '#38bdf8' : '#f59e0b',
-              background: datasetStatus.source === 'uploaded' ? 'rgba(168, 85, 247, 0.1)' : datasetStatus.source === 'default' ? 'rgba(56, 189, 248, 0.1)' : 'rgba(245, 158, 11, 0.1)',
-              padding: '0.35rem 0.75rem',
-              borderRadius: '9999px',
-              border: datasetStatus.source === 'uploaded' ? '1px solid rgba(168, 85, 247, 0.3)' : datasetStatus.source === 'default' ? '1px solid rgba(56, 189, 248, 0.3)' : '1px solid rgba(245, 158, 11, 0.3)'
+              gap: '0.75rem'
             }}>
-              <span style={{
-                width: '8px',
-                height: '8px',
-                borderRadius: '50%',
-                background: datasetStatus.source === 'uploaded' ? '#c084fc' : datasetStatus.source === 'default' ? '#38bdf8' : '#f59e0b',
-                display: 'inline-block'
-              }} />
-              Dataset: {datasetStatus.source === 'uploaded' ? 'Custom Upload' : datasetStatus.source === 'default' ? 'Default Sample' : 'No Dataset Uploaded'} ({datasetStatus.invoices_count} Inv / {datasetStatus.transactions_count} Txn)
+              <AlertCircle size={18} style={{ flexShrink: 0 }} />
+              <span style={{ fontSize: '0.875rem', fontWeight: 500 }}>{errorMsg}</span>
             </div>
           )}
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8125rem', color: '#34d399', background: 'rgba(16, 185, 129, 0.1)', padding: '0.35rem 0.75rem', borderRadius: '9999px', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#34d399', display: 'inline-block' }} />
-            API Connected
-          </div>
+          {/* Tab 1: Dashboard / Reconciliation Matrix */}
+          {activeTab === 'dashboard' && (
+            <>
+              {/* 8 Neutral KPI Cards + Reconciliation Overview */}
+              <DashboardSummaryView summary={summary} />
 
-          <button
-            className="action-btn"
-            onClick={handleTriggerReconciliation}
-            disabled={isReconciling || results.length === 0}
-          >
-            <RefreshCw size={16} className={isReconciling ? 'animate-spin' : ''} />
-            {isReconciling ? 'Reconciling...' : 'Run Pipeline'}
-          </button>
-        </div>
-      </header>
+              {/* Primary Focus Transaction Table */}
+              <ReconciliationTable
+                results={results}
+                onSelectTransaction={(txn) => setSelectedTxn(txn)}
+                onGoToUpload={() => setActiveTab('upload')}
+              />
+            </>
+          )}
 
-      {errorMsg && (
-        <div style={{ background: 'rgba(244, 63, 94, 0.15)', border: '1px solid #f43f5e', color: '#f43f5e', padding: '1rem', borderRadius: '8px', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <AlertCircle size={20} />
-          {errorMsg}
-        </div>
-      )}
+          {/* Tab 2: Upload Dataset */}
+          {activeTab === 'upload' && (
+            <UploadDataset
+              datasetStatus={datasetStatus}
+              onDatasetUpdated={handleDatasetUpdated}
+            />
+          )}
 
-      {/* Summary KPI Section */}
-      <DashboardSummaryView summary={summary} />
+          {/* Tab 3: Ground Truth Benchmark */}
+          {activeTab === 'evaluation' && (
+            <EvaluationView
+              evaluation={evaluation}
+              onGoToUpload={() => setActiveTab('upload')}
+            />
+          )}
 
-      {/* Tabs Navigation */}
-      <nav className="tabs-nav">
-        <button
-          className={`tab-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
-          onClick={() => setActiveTab('dashboard')}
-        >
-          <LayoutDashboard size={18} />
-          Reconciliation Table
-        </button>
+          {/* Tab 4: Raw Dataset Inspector */}
+          {activeTab === 'data' && (
+            <DataInspector invoices={invoices} transactions={transactions} />
+          )}
 
-        <button
-          className={`tab-btn ${activeTab === 'upload' ? 'active' : ''}`}
-          onClick={() => setActiveTab('upload')}
-        >
-          <Upload size={18} />
-          Upload Dataset
-        </button>
-
-        <button
-          className={`tab-btn ${activeTab === 'evaluation' ? 'active' : ''}`}
-          onClick={() => setActiveTab('evaluation')}
-        >
-          <Award size={18} />
-          Ground Truth Evaluation
-        </button>
-
-        <button
-          className={`tab-btn ${activeTab === 'data' ? 'active' : ''}`}
-          onClick={() => setActiveTab('data')}
-        >
-          <Database size={18} />
-          Raw Dataset Inspector
-        </button>
-      </nav>
-
-      {/* Tab Views */}
-      {activeTab === 'dashboard' && (
-        <ReconciliationTable
-          results={results}
-          onSelectTransaction={(txn) => setSelectedTxn(txn)}
-          onGoToUpload={() => setActiveTab('upload')}
-        />
-      )}
-
-      {activeTab === 'upload' && (
-        <UploadDataset
-          datasetStatus={datasetStatus}
-          onDatasetUpdated={handleDatasetUpdated}
-        />
-      )}
-
-      {activeTab === 'evaluation' && (
-        <EvaluationView evaluation={evaluation} />
-      )}
-
-      {activeTab === 'data' && (
-        <DataInspector invoices={invoices} transactions={transactions} />
-      )}
-
-      {/* Transaction Detail Modal Drawer */}
-      <TransactionDetailModal
-        transaction={selectedTxn}
-        invoices={invoices}
-        onClose={() => setSelectedTxn(null)}
-        onHumanReview={handleHumanReview}
-      />
+          {/* Transaction Detail Modal */}
+          <TransactionDetailModal
+            transaction={selectedTxn}
+            invoices={invoices}
+            onClose={() => setSelectedTxn(null)}
+            onHumanReview={handleHumanReview}
+          />
+        </main>
+      </div>
     </div>
   );
 };
