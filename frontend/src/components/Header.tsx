@@ -1,19 +1,22 @@
 import React from 'react';
 import type { DatasetStatus } from '../types';
 import { RefreshCw, Bell, Database, Check } from 'lucide-react';
+import { ReportExportMenu } from './ReportExportMenu';
 
 interface HeaderProps {
   activeTab: 'dashboard' | 'upload' | 'evaluation' | 'data';
   datasetStatus: DatasetStatus | null;
   isReconciling: boolean;
   onTriggerReconciliation: () => Promise<void>;
+  onNotification: (message: string, type: 'success' | 'error') => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   activeTab,
   datasetStatus,
   isReconciling,
-  onTriggerReconciliation
+  onTriggerReconciliation,
+  onNotification
 }) => {
   const getTabTitle = () => {
     switch (activeTab) {
@@ -42,9 +45,9 @@ export const Header: React.FC<HeaderProps> = ({
 
   const { title, subtitle } = getTabTitle();
 
-  const invoicesCount = datasetStatus ? datasetStatus.invoices_count : 100;
-  const txnsCount = datasetStatus ? datasetStatus.transactions_count : 85;
-  const datasetLabel = datasetStatus?.source === 'uploaded' ? 'Custom Dataset' : 'Sample Dataset';
+  const invoicesCount = datasetStatus ? datasetStatus.invoices_count : 0;
+  const txnsCount = datasetStatus ? datasetStatus.transactions_count : 0;
+  const datasetLabel = datasetStatus?.source === 'uploaded' ? 'Custom Dataset' : (datasetStatus?.source === 'default' ? 'Sample Dataset' : 'No Dataset');
 
   return (
     <header className="app-header">
@@ -72,6 +75,12 @@ export const Header: React.FC<HeaderProps> = ({
           <span className="notification-dot" />
         </button>
 
+        {/* Generate Report Export Dropdown Button */}
+        <ReportExportMenu
+          onNotification={onNotification}
+          disabled={isReconciling}
+        />
+
         {/* Run Reconciliation Primary Button */}
         <button
           className="run-reconciliation-btn"
@@ -85,3 +94,4 @@ export const Header: React.FC<HeaderProps> = ({
     </header>
   );
 };
+

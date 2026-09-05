@@ -1,0 +1,10 @@
+pandas
+numpy
+rapidfuzz
+scikit-learn
+fastapi
+uvicorn
+pydantic
+pytest
+reportlab
+openpyxl

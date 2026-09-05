@@ -1,7 +1,8 @@
 import os
 import io
+import datetime
 import pandas as pd
-from fastapi import FastAPI, HTTPException, Path, File, UploadFile
+from fastapi import FastAPI, HTTPException, Path, File, UploadFile, Response
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Dict, Any, Optional
 
@@ -17,6 +18,7 @@ from backend.app.schemas.schemas import (
 )
 from backend.app.services.pipeline import ReconciliationPipeline
 from backend.app.services.validation.validator import DatasetValidator
+from backend.app.services.reports.report_generator import PDFReportGenerator, ExcelReportGenerator
 
 app = FastAPI(
     title="AI Finance Controller - Payment Reconciliation API",
@@ -264,3 +266,76 @@ def submit_human_review(transaction_id: str, review: HumanReviewRequestSchema):
             return res
 
     raise HTTPException(status_code=500, detail="Error applying human review override")
+
+@app.post("/api/reports/pdf", tags=["Reports"])
+def generate_pdf_report():
+    if not pipeline.invoices_list and not pipeline.transactions_list:
+        pipeline.load_data()
+
+    if not pipeline.invoices_list and not pipeline.transactions_list:
+        raise HTTPException(status_code=400, detail="No active dataset found to generate report. Please load or upload a dataset first.")
+
+    if not pipeline.latest_results:
+        pipeline.run_pipeline()
+
+    summary = pipeline.get_summary()
+    results = pipeline.latest_results
+    invoices = pipeline.invoices_list
+    transactions = pipeline.transactions_list
+    evaluation = pipeline.evaluate()
+
+    pdf_bytes = PDFReportGenerator.generate(
+        summary=summary,
+        results=results,
+        invoices=invoices,
+        transactions=transactions,
+        evaluation=evaluation,
+        dataset_source=pipeline.source
+    )
+
+    filename = f"AI_Finance_Controller_Report_{datetime.datetime.now().strftime('%Y-%m-%d')}.pdf"
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": f'attachment; filename="{filename}"',
+            "Access-Control-Expose-Headers": "Content-Disposition"
+        }
+    )
+
+@app.post("/api/reports/excel", tags=["Reports"])
+def generate_excel_report():
+    if not pipeline.invoices_list and not pipeline.transactions_list:
+        pipeline.load_data()
+
+    if not pipeline.invoices_list and not pipeline.transactions_list:
+        raise HTTPException(status_code=400, detail="No active dataset found to generate report. Please load or upload a dataset first.")
+
+    if not pipeline.latest_results:
+        pipeline.run_pipeline()
+
+    summary = pipeline.get_summary()
+    results = pipeline.latest_results
+    invoices = pipeline.invoices_list
+    transactions = pipeline.transactions_list
+    evaluation = pipeline.evaluate()
+
+    excel_bytes = ExcelReportGenerator.generate(
+        summary=summary,
+        results=results,
+        invoices=invoices,
+        transactions=transactions,
+        evaluation=evaluation,
+        dataset_source=pipeline.source
+    )
+
+    filename = f"AI_Finance_Controller_Report_{datetime.datetime.now().strftime('%Y-%m-%d')}.xlsx"
+    return Response(
+        content=excel_bytes,
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={
+            "Content-Disposition": f'attachment; filename="{filename}"',
+            "Access-Control-Expose-Headers": "Content-Disposition"
+        }
+    )
+
