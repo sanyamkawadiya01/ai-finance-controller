@@ -4,9 +4,6 @@ import {
   Upload,
   Award,
   Database,
-  PieChart,
-  Bell,
-  Settings,
   ShieldCheck,
   User,
   ChevronRight
@@ -34,7 +31,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
         <div className="brand-text-container">
           <div className="brand-title-text">
-            AI Controller
+            AI Finance Controller
           </div>
           <div className="brand-subtitle-badge">
             FINTECH RECONCILIATION
@@ -93,40 +90,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </button>
       </div>
 
-      {/* Secondary Tools Navigation Section */}
-      <div className="sidebar-nav-section">
-        <div className="sidebar-section-title">ANALYTICS & CONTROL</div>
-
-        <button className="sidebar-nav-item disabled">
-          <div className="nav-item-icon">
-            <PieChart size={18} />
-          </div>
-          <span className="nav-item-label">Reports & Export</span>
-        </button>
-
-        <button className="sidebar-nav-item disabled">
-          <div className="nav-item-icon">
-            <Bell size={18} />
-          </div>
-          <span className="nav-item-label">Alerts & Rules</span>
-          <span className="nav-badge count-badge amber">3</span>
-        </button>
-
-        <button className="sidebar-nav-item disabled">
-          <div className="nav-item-icon">
-            <Settings size={18} />
-          </div>
-          <span className="nav-item-label">Engine Settings</span>
-        </button>
-      </div>
-
       {/* User Profile Footer */}
       <div className="sidebar-user-footer">
         <div className="user-avatar">
           <User size={18} color="#2563EB" />
         </div>
         <div className="user-info">
-          <div className="user-name">Alex Morgan</div>
+          <div className="user-name">Sanyam Kawadiya</div>
           <div className="user-role">Finance Controller</div>
         </div>
         <ChevronRight size={16} className="user-chevron" />
@@ -134,3 +104,4 @@ export const Sidebar: React.FC<SidebarProps> = ({
     </aside>
   );
 };
+

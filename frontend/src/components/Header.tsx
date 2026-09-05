@@ -1,6 +1,6 @@
 import React from 'react';
 import type { DatasetStatus } from '../types';
-import { RefreshCw, Bell, Database, Check } from 'lucide-react';
+import { RefreshCw, Database, Check } from 'lucide-react';
 import { ReportExportMenu } from './ReportExportMenu';
 
 interface HeaderProps {
@@ -69,12 +69,6 @@ export const Header: React.FC<HeaderProps> = ({
           <Check size={14} color="#16A34A" style={{ marginLeft: '4px' }} />
         </div>
 
-        {/* Notification Icon */}
-        <button className="header-icon-btn" title="System Notifications">
-          <Bell size={18} />
-          <span className="notification-dot" />
-        </button>
-
         {/* Generate Report Export Dropdown Button */}
         <ReportExportMenu
           onNotification={onNotification}
@@ -94,4 +88,5 @@ export const Header: React.FC<HeaderProps> = ({
     </header>
   );
 };
+
 
