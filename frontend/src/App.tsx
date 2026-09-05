@@ -15,7 +15,7 @@ import { TransactionDetailModal } from './components/TransactionDetailModal';
 import { EvaluationView } from './components/EvaluationView';
 import { DataInspector } from './components/DataInspector';
 import { UploadDataset } from './components/UploadDataset';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, CheckCircle2, X } from 'lucide-react';
 
 const API_BASE = 'http://localhost:8000/api';
 
@@ -31,6 +31,14 @@ export const App: React.FC = () => {
   const [selectedTxn, setSelectedTxn] = useState<ReconciliationResult | null>(null);
   const [isReconciling, setIsReconciling] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+  const handleNotification = (message: string, type: 'success' | 'error') => {
+    setNotification({ message, type });
+    setTimeout(() => {
+      setNotification((prev) => (prev?.message === message ? null : prev));
+    }, 6000);
+  };
 
   const fetchAllData = async () => {
     setErrorMsg(null);
@@ -76,8 +84,10 @@ export const App: React.FC = () => {
     try {
       await fetch(`${API_BASE}/reconcile`, { method: 'POST' });
       await fetchAllData();
+      handleNotification("Reconciliation completed successfully!", 'success');
     } catch (err) {
       console.error("Error triggering reconciliation:", err);
+      handleNotification("Failed to execute reconciliation pipeline.", 'error');
     } finally {
       setIsReconciling(false);
     }
@@ -97,8 +107,10 @@ export const App: React.FC = () => {
       await fetchAllData();
       const updatedTxnRes = await fetch(`${API_BASE}/reconciliation/${transactionId}`).then(r => r.json());
       setSelectedTxn(updatedTxnRes);
+      handleNotification(`Human review updated for transaction ${transactionId}`, 'success');
     } catch (err) {
       console.error("Error submitting human review:", err);
+      handleNotification("Failed to save human review decision.", 'error');
     }
   };
 
@@ -125,11 +137,27 @@ export const App: React.FC = () => {
           datasetStatus={datasetStatus}
           isReconciling={isReconciling}
           onTriggerReconciliation={handleTriggerReconciliation}
+          onNotification={handleNotification}
         />
 
         {/* Dynamic View Canvas */}
         <main className="view-container">
-          {/* Global Error Banner */}
+          {/* Notification Toast Banner */}
+          {notification && (
+            <div className={`notification-toast toast-${notification.type}`}>
+              {notification.type === 'success' ? (
+                <CheckCircle2 size={18} className="toast-icon success" />
+              ) : (
+                <AlertCircle size={18} className="toast-icon error" />
+              )}
+              <span className="toast-message">{notification.message}</span>
+              <button className="toast-close-btn" onClick={() => setNotification(null)}>
+                <X size={14} />
+              </button>
+            </div>
+          )}
+
+          {/* Global Connection Error Banner */}
           {errorMsg && (
             <div style={{
               backgroundColor: 'var(--critical-red-light)',
@@ -194,3 +222,4 @@ export const App: React.FC = () => {
     </div>
   );
 };
+
